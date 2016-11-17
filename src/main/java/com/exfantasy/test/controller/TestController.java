@@ -172,6 +172,9 @@ public class TestController implements Initializable {
 	}
 
 	private void makeQuery() {
+		// TODO query from somewhere
+		
+		// TEST Send Http POST
 		String url = "http://localhost:8080/night-web/user/login";
 		HashMap<String, Object> data = new HashMap<>();
 		data.put("username", "bensonQQQQ");
@@ -187,5 +190,13 @@ public class TestController implements Initializable {
 
 	private void makeClear() {
 		mConsumes.clear();
+		
+		// TEST Send Http GET
+		String url = "http://localhost:8080/night-web/user/account/record/bet?start=1458533689&end=1658553932&page=1";
+		try {
+			HttpUtil.sendGetRequest(url);
+		} catch (HttpUtilException e) {
+			e.printStackTrace();
+		}
 	}
 }
