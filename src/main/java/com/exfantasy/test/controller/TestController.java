@@ -1,8 +1,17 @@
 package com.exfantasy.test.controller;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import com.exfantasy.test.enu.Type;
+import com.exfantasy.test.vo.Consume;
+
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +31,7 @@ public class TestController implements Initializable {
 	private DatePicker dpConsumeDate;
 
 	@FXML
-	private ComboBox cmbTypes;
+	private ComboBox<Type> cmbTypes;
 
 	@FXML
 	private TextField tfdProdName;
@@ -34,7 +43,8 @@ public class TestController implements Initializable {
 	private TextField tfdLotteryNo;
 
 	@FXML
-	private TableView tvConsumeDatas;
+	private TableView<Consume> tvConsumeDatas;
+	private ObservableList<Consume> mConsumes;
 
 	@FXML
 	private Button btnInsert;
@@ -51,9 +61,27 @@ public class TestController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		setAquaFxStyle();
+		
+		initComponents();
 	}
 	
 	private void setAquaFxStyle() {
+		// FIXME 因為導入 AquaFx DatePicker 會壞掉, 所以先不用
+	}
+	
+	private void initComponents() {
+		fillTypeCombos();
+	}
+
+	private void fillTypeCombos() {
+		Platform.runLater(() -> {
+		    ObservableList<Type> items = cmbTypes.getItems();
+		    items.clear();
+
+		    ArrayList<Type> comboValues = new ArrayList<Type>();
+			comboValues.addAll(Arrays.asList(Type.values()));
+		    items.addAll(comboValues);
+		});
 	}
 
 	public void setStage(Stage stage) {
@@ -63,11 +91,42 @@ public class TestController implements Initializable {
 	@FXML
 	public void handleButtonsAction(ActionEvent event) {
 		if (event.getSource().equals(btnInsert)) {
-			System.out.println("Insert button clicked...");
+			makeInsert();
 		} else if (event.getSource().equals(btnQuery)) {
-			System.out.println("Query button clicked...");
+			makeQuery();
 		} else if (event.getSource().equals(btnClear)) {
-			System.out.println("Clear button clicked...");
+			makeClear();
 		}
+	}
+
+	private void makeInsert() {
+		LocalDate consumeDate = dpConsumeDate.getValue();
+		Type type = cmbTypes.getValue();
+		String prodName = tfdProdName.getText();
+		Integer amount = Integer.parseInt(tfdAmount.getText());
+		String lotteryNo = tfdLotteryNo.getText();
+		
+		Consume consume = new Consume(consumeDate, type, prodName, amount, lotteryNo);
+		
+		// TODO insert somewhere
+		
+		// TEST
+		Consume[] consumes = new Consume[] {consume};
+		mConsumes = FXCollections.observableArrayList(consumes);
+		setDatasToTable();
+	}
+
+	private void setDatasToTable() {
+		Platform.runLater(() -> {
+			tvConsumeDatas.setItems(mConsumes);
+		});
+	}
+
+	private void makeQuery() {
+
+	}
+
+	private void makeClear() {
+				
 	}
 }
