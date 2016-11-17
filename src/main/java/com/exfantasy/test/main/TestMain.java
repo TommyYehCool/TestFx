@@ -2,7 +2,7 @@ package com.exfantasy.test.main;
 
 import com.aquafx_project.AquaFx;
 import com.exfantasy.test.cnst.UiConstant;
-import com.exfantasy.test.controller.ExcelExtractorUiViewController;
+import com.exfantasy.test.controller.TestController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,21 +10,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ExcelExtractorUiMain extends Application {
+public class TestMain extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		// 導入 AquaFx -> http://aquafx-project.com/documentation.html
 		AquaFx.style();
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/ExcelExtractorUiView.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/Test.fxml"));
 		Parent root = (Parent) loader.load();
 
-		ExcelExtractorUiViewController controller = (ExcelExtractorUiViewController) loader.getController();
+		TestController controller = (TestController) loader.getController();
 		controller.setStage(stage);
 
 		Scene scene = new Scene(root);
-		stage.setTitle(UiConstant.EXCEL_EXTRACOTR_UI_NAME);
+		stage.setTitle(UiConstant.UI_TITLE);
 		stage.setScene(scene);
 		stage.show();
 	}

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.exfantasy.test.controller.TestController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="750.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="801.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="60.0" prefWidth="740.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="801.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="100.0" prefWidth="750.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="801.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="750.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<Label text="消費日期" GridPane.halignment="RIGHT">
+			<GridPane.margin>
+				<Insets />
+			</GridPane.margin>
+		</Label>
+		<DatePicker fx:id="dpConsumeDate" GridPane.columnIndex="1">
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</DatePicker>
+		<Label text="分類" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+			<padding>
+				<Insets left="10.0" />
+			</padding>
+		</Label>
+		<ComboBox fx:id="cmbTypes" prefHeight="23.0" prefWidth="130.0" GridPane.columnIndex="3">
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</ComboBox>
+		<Label text="商品名稱" GridPane.columnIndex="4" GridPane.halignment="RIGHT">
+			<padding>
+				<Insets left="10.0" />
+			</padding>
+		</Label>
+		<TextField fx:id="tfdProdName" prefHeight="23.0" prefWidth="140.0" GridPane.columnIndex="5">
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</TextField>
+
+		<Label text="消費金額" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+		<TextField fx:id="tfdAmount" GridPane.columnIndex="1" GridPane.rowIndex="1">
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</TextField>
+		<Label text="發票號碼" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+			<padding>
+				<Insets left="10.0" />
+			</padding>
+			<GridPane.margin>
+				<Insets />
+			</GridPane.margin>
+		</Label>
+		<TextField fx:id="tfdLotteryNo" prefHeight="23.0" prefWidth="140.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</TextField>
+
+		<TableView fx:id="tvConsumeDatas" prefHeight="480.0" prefWidth="1248.0" tableMenuButtonVisible="true" GridPane.columnSpan="7" GridPane.rowIndex="3">
+			<columns>
+				<TableColumn editable="false" prefWidth="65.0" text="是否中獎" />
+				<TableColumn prefWidth="75.0" text="中獎金額" />
+				<TableColumn prefWidth="90.0" text="發票號碼" />
+				<TableColumn prefWidth="105.0" text="消費日期" />
+				<TableColumn prefWidth="73.0" text="消費金額" />
+				<TableColumn prefWidth="73.0" text="分類" />
+				<TableColumn prefWidth="280.0" text="商品名稱" />
+			</columns>
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</TableView>
+		<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
+			<children>
+				<Button fx:id="btnInsert" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="新增" GridPane.columnIndex="6" GridPane.rowIndex="2">
+					<GridPane.margin>
+						<Insets left="10.0" right="10.0" />
+					</GridPane.margin>
+					<HBox.margin>
+						<Insets bottom="10.0" right="10.0" top="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="btnQuery" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="查詢" GridPane.columnIndex="7" GridPane.rowIndex="2">
+					<GridPane.margin>
+						<Insets left="10.0" right="10.0" />
+					</GridPane.margin>
+					<HBox.margin>
+						<Insets bottom="10.0" right="10.0" top="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="清除" GridPane.columnIndex="8" GridPane.columnSpan="2"
+					GridPane.rowIndex="2">
+					<GridPane.margin>
+						<Insets left="10.0" right="10.0" />
+					</GridPane.margin>
+					<HBox.margin>
+						<Insets top="10.0" />
+					</HBox.margin>
+				</Button>
+			</children>
+		</HBox>
+		<Label fx:id="lblProcessResult" text="Label" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4">
+			<padding>
+				<Insets left="30.0" />
+			</padding>
+		</Label>
+
+	</children>
+</GridPane>
