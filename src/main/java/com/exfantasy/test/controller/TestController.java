@@ -47,7 +47,7 @@ public class TestController implements Initializable {
 	private TextField tfdLotteryNo;
 
 	@FXML
-	private TableView<Consume> tvConsumeDatas;
+	private TableView<Consume> tvConsumes;
 	private ObservableList<Consume> mConsumes;
 
 	@FXML
@@ -99,12 +99,12 @@ public class TestController implements Initializable {
 		
 		defineTableColumnCellFactory();
 		
-		tvConsumeDatas.setItems(mConsumes);
+		tvConsumes.setItems(mConsumes);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void defineTableColumnCellFactory() {
-		ObservableList<TableColumn<Consume, ?>> columns = tvConsumeDatas.getColumns();
+		ObservableList<TableColumn<Consume, ?>> columns = tvConsumes.getColumns();
 		
 		for (int tableColIndex = 0; tableColIndex < columns.size(); tableColIndex++) {
 			TableColDef tableColDef = TableColDef.convertByTableIndex(tableColIndex);
