@@ -1,6 +1,5 @@
 package com.exfantasy.test.main;
 
-import com.aquafx_project.AquaFx;
 import com.exfantasy.test.cnst.UiConstant;
 import com.exfantasy.test.controller.TestController;
 
