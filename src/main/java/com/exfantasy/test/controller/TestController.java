@@ -8,6 +8,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import org.apache.http.client.HttpClient;
@@ -22,6 +23,8 @@ import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.exception.HttpUtilException;
 import com.exfantasy.test.util.HttpUtil;
 import com.exfantasy.test.vo.Consume;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -181,7 +184,11 @@ public class TestController implements Initializable {
 
 	private void makeQuery() {
 		String url = "http://localhost:8080/night-web/user/login";
-		String jsonData = "{\"username\": \"bensonQQQQ\", \"password\": \"abc123\", \"validCode\": \"LKWR\"}";
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("username", "bensonQQQQ");
+		data.put("password", "abc123");
+		data.put("validCode", "LKWR");
+		String jsonData = new Gson().toJson(data);
 		try {
 			HttpUtil.sendPostRequest(url, jsonData);
 		} catch (HttpUtilException e) {
