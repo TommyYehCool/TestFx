@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import com.exfantasy.test.enu.DataType;
+import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.vo.Consume;
 
@@ -19,8 +21,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class TestController implements Initializable {
@@ -65,12 +69,18 @@ public class TestController implements Initializable {
 		initComponents();
 	}
 	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+	
 	private void setAquaFxStyle() {
 		// FIXME 因為導入 AquaFx DatePicker 會壞掉, 所以先不用
 	}
 	
 	private void initComponents() {
 		fillTypeCombos();
+		
+		initTable();
 	}
 
 	private void fillTypeCombos() {
@@ -83,9 +93,53 @@ public class TestController implements Initializable {
 		    items.addAll(comboValues);
 		});
 	}
+	
+	private void initTable() {
+		mConsumes = FXCollections.observableArrayList();
+		
+		defineTableColumnCellFactory();
+		
+		tvConsumeDatas.setItems(mConsumes);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void defineTableColumnCellFactory() {
+		ObservableList<TableColumn<Consume, ?>> columns = tvConsumeDatas.getColumns();
+		
+		for (int tableColIndex = 0; tableColIndex < columns.size(); tableColIndex++) {
+			TableColDef tableColDef = TableColDef.convertByTableIndex(tableColIndex);
+			
+			PropertyValueFactory propValFactory = null;
+			
+			DataType dataType = tableColDef.getDateType();
+			String mappingVoField = tableColDef.getMappingVoField();
+			
+			switch (dataType) {
+				case LocalDate:
+					propValFactory = new PropertyValueFactory<Consume, LocalDate>(mappingVoField);
+					break;
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
+				case Type:
+					propValFactory = new PropertyValueFactory<Consume, Type>(mappingVoField);
+					break;
+
+				case String:
+					propValFactory = new PropertyValueFactory<Consume, String>(mappingVoField);
+					break;
+
+				case Integr:
+					propValFactory = new PropertyValueFactory<Consume, Integer>(mappingVoField);
+					break;
+				
+				case Boolean:
+					propValFactory = new PropertyValueFactory<Consume, Boolean>(mappingVoField);
+					break;
+			}
+			
+			// 設定 PropertyValueFactory 到 TableColumn
+			TableColumn column = columns.get(tableColIndex);
+			column.setCellValueFactory(propValFactory);
+		}
 	}
 
 	@FXML
@@ -110,16 +164,7 @@ public class TestController implements Initializable {
 		
 		// TODO insert somewhere
 		
-		// TEST
-		Consume[] consumes = new Consume[] {consume};
-		mConsumes = FXCollections.observableArrayList(consumes);
-		setDatasToTable();
-	}
-
-	private void setDatasToTable() {
-		Platform.runLater(() -> {
-			tvConsumeDatas.setItems(mConsumes);
-		});
+		mConsumes.add(consume);
 	}
 
 	private void makeQuery() {
@@ -127,6 +172,6 @@ public class TestController implements Initializable {
 	}
 
 	private void makeClear() {
-				
+		mConsumes.clear();
 	}
 }

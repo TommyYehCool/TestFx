@@ -13,6 +13,7 @@ public class Consume {
 	
 	private Integer prize;
 	private Boolean isGot;
+
 	public Consume(LocalDate consumeDate, Type type, String prodName, Integer amount, String lotteryNo) {
 		this.consumeDate = consumeDate;
 		this.type = type;
