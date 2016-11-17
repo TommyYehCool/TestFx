@@ -52,12 +52,12 @@ public class TestController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		setAquaFxStyle();
 	}
+	
+	private void setAquaFxStyle() {
+	}
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-	}
-
-	private void setAquaFxStyle() {
 	}
 
 	@FXML
