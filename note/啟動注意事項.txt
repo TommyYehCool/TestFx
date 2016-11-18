@@ -1,0 +1,3 @@
+1. main class: com.exfantasy.test.main.TestMain
+
+2. VM argument 要加 -Dlogback.configurationFile="./config/logback.xml" 才會有 log

@@ -2,7 +2,7 @@
 <configuration>
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>[%d][%-5p][%t][%C-%M][%L] %m%n</pattern>
+			<pattern>[%d][%-5p][%t][%C-%M][Line:%L] %m%n</pattern>
 		</encoder>
 	</appender>
 
