@@ -14,7 +14,7 @@ dependencies {
     
     compile 'com.google.code.gson:gson:2.8.0'
     
-    compile 'com.github.TommyYehCool:MyUtils:1.0.8'
+    compile 'com.github.TommyYehCool:MyUtils:1.0.9'
     
     testCompile 'junit:junit:4.12'
 }

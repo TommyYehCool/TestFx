@@ -237,7 +237,9 @@ public class TestController implements Initializable {
 			sendAddConsume(consume);
 			mConsumes.add(consume);
 		} catch (HttpUtilException e) {
-			e.printStackTrace();
+			String msg = "新增消費資料失敗";
+			logger.error(msg, e);
+			showErrorMsg(msg);
 		}
 	}
 
