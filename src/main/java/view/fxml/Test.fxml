@@ -120,7 +120,7 @@
 				</Button>
 			</children>
 		</HBox>
-		<Label fx:id="lblProcessResult" text="Label" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4">
+		<Label fx:id="lblProcessResult" text="" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4">
 			<padding>
 				<Insets left="30.0" />
 			</padding>
