@@ -10,9 +10,9 @@ import java.util.ResourceBundle;
 import com.exfantasy.test.enu.DataType;
 import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
-import com.exfantasy.test.exception.HttpUtilException;
-import com.exfantasy.test.util.HttpUtil;
 import com.exfantasy.test.vo.Consume;
+import com.exfantasy.utils.http.HttpUtil;
+import com.exfantasy.utils.http.HttpUtilException;
 import com.google.gson.Gson;
 
 import javafx.application.Platform;
