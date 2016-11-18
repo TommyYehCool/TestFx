@@ -192,7 +192,7 @@ public class TestController implements Initializable {
 		mConsumes.clear();
 		
 		// TEST Send Http GET
-		String url = "http://localhost:8080/night-web/user/account/record/bet?start=1458533689&end=1658553932&page=1";
+		String url = "http://localhost:8080/night-web/user/team/member";
 		try {
 			HttpUtil.sendGetRequest(url);
 		} catch (HttpUtilException e) {
