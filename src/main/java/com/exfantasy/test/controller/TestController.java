@@ -4,16 +4,23 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.exfantasy.test.config.Config;
+import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
 import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
+import com.exfantasy.test.testcase.TestCase;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
-import com.google.gson.Gson;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -32,6 +39,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class TestController implements Initializable {
+	private Logger logger = LoggerFactory.getLogger(TestController.class);
+	
+	private Config mConfig;
+	
 	// ---------------- FX Related ----------------
 	private Stage stage;
 
@@ -65,16 +76,20 @@ public class TestController implements Initializable {
 
 	@FXML
 	private Label lblProcessResult;
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		setAquaFxStyle();
-		
-		initComponents();
-	}
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		initComponents();
+
+		setAquaFxStyle();
+		
+		loadConfig();
+		
+		loginToSever();
 	}
 	
 	private void setAquaFxStyle() {
@@ -85,6 +100,23 @@ public class TestController implements Initializable {
 		fillTypeCombos();
 		
 		initTable();
+	}
+	
+	private void loadConfig() {
+		mConfig = ConfigHolder.getInstance().getConfig();
+	}
+	
+	private void loginToSever() {
+		String url = mConfig.getHost() + "/login";
+
+		List<NameValuePair> params = new ArrayList<>();
+		params.add(new BasicNameValuePair("username", "tommy.yeh1112@gmail.com"));
+		params.add(new BasicNameValuePair("password", "1234qwer"));
+		try {
+			HttpUtil.sendPostRequest(url, params);
+		} catch (HttpUtilException e) {
+			logger.error("Try to login to url: <{}> failed", url, e);
+		}
 	}
 
 	private void fillTypeCombos() {
@@ -173,30 +205,9 @@ public class TestController implements Initializable {
 
 	private void makeQuery() {
 		// TODO query from somewhere
-		
-		// TEST Send Http POST
-		String url = "http://localhost:8080/night-web/user/login";
-		HashMap<String, Object> data = new HashMap<>();
-		data.put("username", "bensonQQQQ");
-		data.put("password", "abc123");
-		data.put("validCode", "LKWR");
-		String jsonData = new Gson().toJson(data);
-		try {
-			HttpUtil.sendPostRequest(url, jsonData);
-		} catch (HttpUtilException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void makeClear() {
 		mConsumes.clear();
-		
-		// TEST Send Http GET
-		String url = "http://localhost:8080/night-web/user/team/member";
-		try {
-			HttpUtil.sendGetRequest(url);
-		} catch (HttpUtilException e) {
-			e.printStackTrace();
-		}
 	}
 }
