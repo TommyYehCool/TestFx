@@ -137,6 +137,7 @@ public class TestController implements Initializable {
 		try {
 			HttpUtil.sendPostRequest(url, params);
 			changeButtonsState(false);
+			showMsg("登入伺服器成功");
 		} catch (HttpUtilException e) {
 			logger.error("Try to login to url: <{}> failed", url, e);
 			showErrorMsg("嘗試登入伺服器失敗, 網址: " + mConfig.getHost());
@@ -218,6 +219,7 @@ public class TestController implements Initializable {
 	private boolean checkInput() {
 		LocalDate date = dpConsumeDate.getValue();
 		if (date == null) {
+			showErrorMsg("請輸入消費日期");
 			return false;
 		}
 		return true;
