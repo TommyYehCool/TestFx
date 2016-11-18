@@ -1,6 +1,6 @@
 package com.exfantasy.test.main;
 
-import com.exfantasy.test.cnst.UiConstant;
+import com.exfantasy.test.cnst.UiCnst;
 import com.exfantasy.test.controller.TestController;
 
 import javafx.application.Application;
@@ -24,7 +24,7 @@ public class TestMain extends Application {
 		controller.setStage(stage);
 
 		Scene scene = new Scene(root);
-		stage.setTitle(UiConstant.UI_TITLE);
+		stage.setTitle(UiCnst.UI_TITLE);
 		stage.setScene(scene);
 		stage.show();
 	}
