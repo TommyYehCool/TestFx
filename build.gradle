@@ -5,6 +5,11 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+// Version settings
+ext { 
+	jacksonDataTypeVersion = '2.8.5'
+}
+
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     
@@ -15,6 +20,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     
     compile 'com.github.TommyYehCool:MyUtils:1.0.9'
+    
+    // --------- 通訊資料時間轉換 ---------
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeVersion}"
     
     testCompile 'junit:junit:4.12'
 }
