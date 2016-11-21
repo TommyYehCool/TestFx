@@ -244,7 +244,7 @@ public class TestController implements Initializable {
 	}
 
 	private void sendAddConsume(Consume consume) throws HttpUtilException {
-		final String url = mConfig.getHost() + "/addConsume";
+		final String url = mConfig.getHost() + "/consume/add_consume";
 		String jsonData = new Gson().toJson(consume);
 		HttpUtil.sendPostRequest(url, jsonData);
 	}
