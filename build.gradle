@@ -11,7 +11,7 @@ ext {
 	logbackVersion = '1.1.5'
 	gsonVersion = '2.8.0'
 	
-	myUtilsVersion = '1.0.9'
+	myUtilsVersion = '1.0.11'
 	
 	junitVersion = '4.12'
 }
