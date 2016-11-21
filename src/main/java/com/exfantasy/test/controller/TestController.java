@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,7 +214,7 @@ public class TestController implements Initializable {
 	@FXML
 	public void handleButtonsAction(ActionEvent event) {
 		if (event.getSource().equals(btnInsert)) {
-			if (checkInput()) {
+			if (checkInsertInput()) {
 				makeInsert();
 			}
 		} else if (event.getSource().equals(btnQuery)) {
@@ -223,10 +224,36 @@ public class TestController implements Initializable {
 		}
 	}
 
-	private boolean checkInput() {
+	private boolean checkInsertInput() {
 		LocalDate date = dpConsumeDate.getValue();
 		if (date == null) {
 			showErrorMsg("請輸入消費日期");
+			return false;
+		}
+		Type type = cmbTypes.getValue();
+		if (type == null) {
+			showErrorMsg("請選擇類別");
+			return false;
+		}
+		String prodName = tfdProdName.getText();
+		if (prodName == null || prodName.isEmpty()) {
+			showErrorMsg("請輸入商品名稱");
+			return false;
+		}
+		String strAmount = tfdAmount.getText();
+		if (strAmount == null || strAmount.isEmpty()) {
+			showErrorMsg("請輸入金額");
+			return false;
+		}
+		try {
+			Integer.parseInt(strAmount);
+		} catch (Exception e) {
+			showErrorMsg("請輸入正確金額");
+			return false;
+		}
+		String lotteryNo = tfdLotteryNo.getText();
+		if (lotteryNo == null || lotteryNo.isEmpty()) {
+			showErrorMsg("請輸入發票號碼");
 			return false;
 		}
 		return true;
@@ -254,7 +281,30 @@ public class TestController implements Initializable {
 	}
 
 	private void makeQuery() {
-		final String url = mConfig.getHost() + "/consume/get_consume";
+		LocalDate startDate = dpStartDate.getValue();
+		LocalDate endDate = dpEndDate.getValue();
+		Integer type = cmbTypes.getValue() != null ? cmbTypes.getValue().getCode() : null;
+		String prodName = tfdProdName.getText();
+		String lotteryNo = tfdLotteryNo.getText();
+		
+		URIBuilder uriBuilder = new URIBuilder();
+		if (startDate != null) {
+			uriBuilder.addParameter("startDate", startDate.toString());
+		}
+		if (endDate != null) {
+			uriBuilder.addParameter("endDate", endDate.toString());
+		}
+		if (type != null) {
+			uriBuilder.addParameter("type", String.valueOf(type));
+		}
+		if (prodName != null && !prodName.isEmpty()) {
+			uriBuilder.addParameter("prodName", prodName);
+		}
+		if (lotteryNo != null && !lotteryNo.isEmpty()) {
+			uriBuilder.addParameter("lotteryNo", lotteryNo);
+		}
+		
+		final String url = mConfig.getHost() + "/consume/get_consume" + uriBuilder.toString();
 		try {
 			HttpUtil.sendGetRequest(url);
 		} catch (HttpUtilException e) {
