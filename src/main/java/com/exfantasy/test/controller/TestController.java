@@ -61,11 +61,13 @@ public class TestController implements Initializable {
 
 	@FXML
 	private TextField tfdLotteryNo;
+	
+	@FXML 
+	private DatePicker dpEndDate;
 
-	@FXML
-	private TableView<Consume> tvConsumes;
-	private ObservableList<Consume> mConsumes;
-
+	@FXML 
+	private DatePicker dpStartDate;
+	
 	@FXML
 	private Button btnInsert;
 
@@ -76,8 +78,12 @@ public class TestController implements Initializable {
 	private Button btnClear;
 
 	@FXML
+	private TableView<Consume> tvConsumes;
+	private ObservableList<Consume> mConsumes;
+
+	@FXML
 	private Label lblProcessResult;
-	
+
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -132,6 +138,7 @@ public class TestController implements Initializable {
 		String url = mConfig.getHost() + "/login";
 
 		List<NameValuePair> params = new ArrayList<>();
+		// FIXME 登入帳號看要怎麼決定
 		params.add(new BasicNameValuePair("username", "tommy.yeh1112@gmail.com"));
 		params.add(new BasicNameValuePair("password", "1234qwer"));
 		try {
@@ -234,7 +241,10 @@ public class TestController implements Initializable {
 		
 		Consume consume = new Consume(consumeDate, type, prodName, amount, lotteryNo);
 		try {
-			sendAddConsume(consume);
+			final String url = mConfig.getHost() + "/consume/add_consume";
+			String jsonData = new Gson().toJson(consume);
+			HttpUtil.sendPostRequest(url, jsonData);
+			
 			mConsumes.add(consume);
 		} catch (HttpUtilException e) {
 			String errorMsg = "新增消費資料失敗";
@@ -243,16 +253,15 @@ public class TestController implements Initializable {
 		}
 	}
 
-	private void sendAddConsume(Consume consume) throws HttpUtilException {
-		final String url = mConfig.getHost() + "/consume/add_consume";
-		// FIXME 這邊需要解決 LocalDate serialize 與 deserialize 問題
-		Gson gson = new Gson();
-		String jsonData = gson.toJson(consume);
-		HttpUtil.sendPostRequest(url, jsonData);
-	}
-
 	private void makeQuery() {
-		// TODO query from somewhere
+		final String url = mConfig.getHost() + "/consume/get_consume";
+		try {
+			HttpUtil.sendGetRequest(url);
+		} catch (HttpUtilException e) {
+			String errorMsg = "查詢消費資料失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
 	}
 
 	private void makeClear() {

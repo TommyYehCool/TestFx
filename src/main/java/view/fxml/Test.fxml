@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.geometry.Insets?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.exfantasy.test.controller.TestController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.exfantasy.test.controller.TestController">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="750.0" />
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="801.0" />
@@ -76,22 +75,21 @@
 				<Insets left="10.0" right="10.0" />
 			</GridPane.margin>
 		</TextField>
-
-		<TableView fx:id="tvConsumes" prefHeight="480.0" prefWidth="1248.0" tableMenuButtonVisible="true" GridPane.columnSpan="7" GridPane.rowIndex="3">
-			<columns>
-				<TableColumn editable="false" prefWidth="65.0" text="是否中獎" />
-				<TableColumn prefWidth="75.0" text="中獎金額" />
-				<TableColumn prefWidth="90.0" text="發票號碼" />
-				<TableColumn prefWidth="105.0" text="消費日期" />
-				<TableColumn prefWidth="73.0" text="消費金額" />
-				<TableColumn prefWidth="73.0" text="分類" />
-				<TableColumn prefWidth="280.0" text="商品名稱" />
-			</columns>
+		
+		<Label text="開始日期" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+		<DatePicker fx:id="dpStartDate" GridPane.columnIndex="1" GridPane.rowIndex="2">
 			<GridPane.margin>
 				<Insets left="10.0" right="10.0" />
 			</GridPane.margin>
-		</TableView>
-		<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
+		</DatePicker>
+      	<Label text="結束日期" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+      	<DatePicker fx:id="dpEndDate" GridPane.columnIndex="3" GridPane.rowIndex="2">
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</DatePicker>
+      	
+      	<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2">
 			<children>
 				<Button fx:id="btnInsert" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="新增" GridPane.columnIndex="6" GridPane.rowIndex="2">
 					<GridPane.margin>
@@ -109,8 +107,7 @@
 						<Insets bottom="10.0" right="10.0" top="10.0" />
 					</HBox.margin>
 				</Button>
-				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="清除" GridPane.columnIndex="8" GridPane.columnSpan="2"
-					GridPane.rowIndex="2">
+				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="清除" GridPane.columnIndex="8" GridPane.columnSpan="2" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="10.0" right="10.0" />
 					</GridPane.margin>
@@ -119,12 +116,29 @@
 					</HBox.margin>
 				</Button>
 			</children>
+         <GridPane.margin>
+            <Insets left="30.0" />
+         </GridPane.margin>
 		</HBox>
+
+		<TableView fx:id="tvConsumes" prefHeight="480.0" prefWidth="1248.0" tableMenuButtonVisible="true" GridPane.columnSpan="7" GridPane.rowIndex="3">
+			<columns>
+				<TableColumn editable="false" prefWidth="65.0" text="是否中獎" />
+				<TableColumn prefWidth="75.0" text="中獎金額" />
+				<TableColumn prefWidth="90.0" text="發票號碼" />
+				<TableColumn prefWidth="105.0" text="消費日期" />
+				<TableColumn prefWidth="73.0" text="消費金額" />
+				<TableColumn prefWidth="73.0" text="分類" />
+				<TableColumn prefWidth="280.0" text="商品名稱" />
+			</columns>
+			<GridPane.margin>
+				<Insets left="10.0" right="10.0" />
+			</GridPane.margin>
+		</TableView>
 		<Label fx:id="lblProcessResult" text="" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4">
 			<padding>
 				<Insets left="30.0" />
 			</padding>
 		</Label>
-
 	</children>
 </GridPane>
