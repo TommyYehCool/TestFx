@@ -21,7 +21,9 @@ import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
+import com.exfantasy.utils.json.GsonLocalDateDeserializer;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -307,10 +309,14 @@ public class TestController implements Initializable {
 		final String url = mConfig.getHost() + "/consume/get_consume" + uriBuilder.toString();
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
-			Gson gson = new Gson();
-			// FIXME 這邊 Date 要看怎麼解決
+			// http://stackoverflow.com/questions/30652314/gson-datetypeexception-when-converting-date-in-typed-in-milliseconds
+			Gson gson =
+				    new GsonBuilder()
+				    	.registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
+				        .create();
 			Consume[] consumes = gson.fromJson(respData, Consume[].class);
-			System.out.println(consumes.length);
+			mConsumes.clear();
+			mConsumes.addAll(Arrays.asList(consumes));
 		} catch (HttpUtilException e) {
 			String errorMsg = "查詢消費資料失敗";
 			logger.error(errorMsg, e);
