@@ -5,24 +5,28 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-// Version settings
 ext { 
-	jacksonDataTypeVersion = '2.8.5'
+	aquafxVersion = '0.1'
+	slf4jVersion = '1.7.21'
+	logbackVersion = '1.1.5'
+	gsonVersion = '2.8.0'
+	gsonJavaTimeSerialisersVersion = '1.1.1'
+	
+	myUtilsVersion = '1.0.9'
+	
+	junitVersion = '4.12'
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile "com.aquafx-project:aquafx:${aquafxVersion}"
+
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile "ch.qos.logback:logback-classic:${logbackVersion}"
     
-    compile 'ch.qos.logback:logback-classic:1.1.5'
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:${gsonJavaTimeSerialisersVersion}"
+
+    compile "com.github.TommyYehCool:MyUtils:${myUtilsVersion}"
     
-    compile 'com.aquafx-project:aquafx:0.1'
-    
-    compile 'com.google.code.gson:gson:2.8.0'
-    
-    compile 'com.github.TommyYehCool:MyUtils:1.0.9'
-    
-    // --------- 通訊資料時間轉換 ---------
-	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeVersion}"
-    
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:${junitVersion}"
 }
