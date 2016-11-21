@@ -11,8 +11,8 @@ public class Consume {
 	private Integer amount;
 	private String lotteryNo;
 	
-	private Integer prize;
 	private Boolean isGot;
+	private Integer prize;
 
 	public Consume(LocalDate consumeDate, Type type, String prodName, Integer amount, String lotteryNo) {
 		this.consumeDate = consumeDate;
@@ -61,15 +61,7 @@ public class Consume {
 	public void setLotteryNo(String lotteryNo) {
 		this.lotteryNo = lotteryNo;
 	}
-
-	public Integer getPrize() {
-		return prize;
-	}
-
-	public void setPrize(Integer prize) {
-		this.prize = prize;
-	}
-
+	
 	public Boolean getIsGot() {
 		return isGot;
 	}
@@ -78,4 +70,11 @@ public class Consume {
 		this.isGot = isGot;
 	}
 
+	public Integer getPrize() {
+		return prize;
+	}
+
+	public void setPrize(Integer prize) {
+		this.prize = prize;
+	}
 }
