@@ -326,6 +326,13 @@ public class TestController implements Initializable {
 
 	private void makeClear() {
 		mConsumes.clear();
+		dpConsumeDate.setValue(null);
+		cmbTypes.setValue(null);
+		tfdProdName.setText("");
+		tfdAmount.setText("");
+		tfdLotteryNo.setText("");
+		dpStartDate.setValue(null);
+		dpEndDate.setValue(null);
 	}
 	
 	private void showMsg(String msg) {
