@@ -306,7 +306,11 @@ public class TestController implements Initializable {
 		
 		final String url = mConfig.getHost() + "/consume/get_consume" + uriBuilder.toString();
 		try {
-			HttpUtil.sendGetRequest(url);
+			String respData = HttpUtil.sendGetRequest(url);
+			Gson gson = new Gson();
+			// FIXME 這邊 Date 要看怎麼解決
+			Consume[] consumes = gson.fromJson(respData, Consume[].class);
+			System.out.println(consumes.length);
 		} catch (HttpUtilException e) {
 			String errorMsg = "查詢消費資料失敗";
 			logger.error(errorMsg, e);
