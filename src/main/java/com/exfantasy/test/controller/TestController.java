@@ -18,10 +18,10 @@ import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
 import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
-import com.exfantasy.test.testcase.GsonLocalDateDeserializer;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
+import com.exfantasy.utils.json.GsonLocalDateDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
