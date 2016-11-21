@@ -310,7 +310,6 @@ public class TestController implements Initializable {
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
 			// http://stackoverflow.com/questions/30652314/gson-datetypeexception-when-converting-date-in-typed-in-milliseconds
-			// 這邊要看 Gson 回傳的怎麼轉比較好, 有點難....Date 轉 LocalDate
 			Gson gson =
 				    new GsonBuilder()
 				    	.registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
