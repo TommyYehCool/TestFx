@@ -20,9 +20,7 @@ import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
-import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -247,7 +245,8 @@ public class TestController implements Initializable {
 
 	private void sendAddConsume(Consume consume) throws HttpUtilException {
 		final String url = mConfig.getHost() + "/consume/add_consume";
-		Gson gson = Converters.registerOffsetDateTime(new GsonBuilder()).create();
+		// FIXME 這邊需要解決 LocalDate serialize 與 deserialize 問題
+		Gson gson = new Gson();
 		String jsonData = gson.toJson(consume);
 		HttpUtil.sendPostRequest(url, jsonData);
 	}
