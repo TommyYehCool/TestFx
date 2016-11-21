@@ -6,17 +6,17 @@ import com.exfantasy.test.enu.Type;
 
 public class Consume {
 	private LocalDate consumeDate;
-	private Type type;
+	private Integer type;
 	private String prodName;
 	private Integer amount;
 	private String lotteryNo;
 	
-	private Boolean isGot;
+	private Boolean got;
 	private Integer prize;
 
 	public Consume(LocalDate consumeDate, Type type, String prodName, Integer amount, String lotteryNo) {
 		this.consumeDate = consumeDate;
-		this.type = type;
+		this.type = type.getCode();
 		this.prodName = prodName;
 		this.amount = amount;
 		this.lotteryNo = lotteryNo;
@@ -30,12 +30,12 @@ public class Consume {
 		this.consumeDate = consumeDate;
 	}
 
-	public Type getType() {
+	public Integer getType() {
 		return type;
 	}
 
 	public void setType(Type type) {
-		this.type = type;
+		this.type = type.getCode();
 	}
 
 	public String getProdName() {
@@ -62,12 +62,12 @@ public class Consume {
 		this.lotteryNo = lotteryNo;
 	}
 	
-	public Boolean getIsGot() {
-		return isGot;
+	public Boolean isGot() {
+		return got;
 	}
 
-	public void setIsGot(Boolean isGot) {
-		this.isGot = isGot;
+	public void setGot(Boolean got) {
+		this.got = got;
 	}
 
 	public Integer getPrize() {
