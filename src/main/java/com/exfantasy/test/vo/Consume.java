@@ -3,6 +3,11 @@ package com.exfantasy.test.vo;
 import java.time.LocalDate;
 
 import com.exfantasy.test.enu.Type;
+import com.exfantasy.test.serializer.ConsumeDeserializer;
+import com.exfantasy.test.serializer.JsonConsumeTypeSerializer;
+import com.exfantasy.test.serializer.JsonLocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -19,6 +24,7 @@ import javafx.beans.property.StringProperty;
  * @author tommy.feng
  *
  */
+@JsonDeserialize(using = ConsumeDeserializer.class)
 public class Consume {
 	private ObjectProperty<LocalDate> consumeDate = new SimpleObjectProperty<>();
 	private ObjectProperty<Type> type = new SimpleObjectProperty<>();
@@ -29,6 +35,7 @@ public class Consume {
 	private BooleanProperty got = new SimpleBooleanProperty();
 	private IntegerProperty prize = new SimpleIntegerProperty();
 
+	@JsonSerialize(using = JsonLocalDateSerializer.class)
 	public LocalDate getConsumeDate() {
 		return consumeDate.get();
 	}
@@ -37,6 +44,7 @@ public class Consume {
 		this.consumeDate.set(consumeDate);
 	}
 
+	@JsonSerialize(using = JsonConsumeTypeSerializer.class)
 	public Type getType() {
 		return type.get();
 	}

@@ -1,5 +1,6 @@
 package com.exfantasy.test.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.ResourceBundle;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.hildan.fxgson.FxGson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +24,10 @@ import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
 import com.exfantasy.utils.json.GsonLocalDateDeserializer;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import javafx.application.Platform;
@@ -278,13 +282,9 @@ public class TestController implements Initializable {
 		try {
 			final String url = mConfig.getHost() + "/consume/add_consume";
 			
-			// http://stackoverflow.com/questions/32794500/serialize-javafx-model-with-gson
-			Gson gson = 
-					FxGson.coreBuilder()
-						  .registerTypeAdapter(Type.class, new ConsumeTypeAdapter())
-						  .setPrettyPrinting()
-						  .create();
-			String jsonData = gson.toJson(consume);
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(consume);
+			
 			HttpUtil.sendPostRequest(url, jsonData);
 			
 			mConsumes.add(consume);
@@ -292,6 +292,8 @@ public class TestController implements Initializable {
 			String errorMsg = "新增消費資料失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -323,16 +325,28 @@ public class TestController implements Initializable {
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
 			
-			// http://stackoverflow.com/questions/30652314/gson-datetypeexception-when-converting-date-in-typed-in-milliseconds
-			// https://github.com/joffrey-bion/fx-gson
-			Gson gson = 
-				FxGson.coreBuilder()
-					  .registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
-					  .registerTypeAdapter(Type.class, new ConsumeTypeAdapter())
-					  .create();
-
-			Consume[] consumes = gson.fromJson(respData, Consume[].class);
+//			// http://stackoverflow.com/questions/30652314/gson-datetypeexception-when-converting-date-in-typed-in-milliseconds
+//			// https://github.com/joffrey-bion/fx-gson
+//			Gson gson = 
+//				FxGson.coreBuilder()
+//					  .registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
+//					  .registerTypeAdapter(Type.class, new ConsumeTypeAdapter())
+//					  .create();
+//
+//			Consume[] consumes = gson.fromJson(respData, Consume[].class);
 			
+			// 試看看 Jackson deserializer
+			Consume[] consumes = new Consume[0];
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				consumes = mapper.readValue(respData, Consume[].class);
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			mConsumes.clear();
 			mConsumes.addAll(Arrays.asList(consumes));
 		} catch (HttpUtilException e) {

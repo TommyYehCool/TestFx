@@ -7,9 +7,14 @@ repositories {
 
 ext { 
 	aquafxVersion = '0.1'
+
 	slf4jVersion = '1.7.21'
 	logbackVersion = '1.1.5'
+
 	gsonVersion = '2.8.0'
+	fxGsonVersion = '2.0.0'
+	
+	jacksonVersion = '2.8.5'
 	
 	myUtilsVersion = '1.0.14'
 	
@@ -22,8 +27,10 @@ dependencies {
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
     compile "ch.qos.logback:logback-classic:${logbackVersion}"
     
-    compile "com.google.code.gson:gson:${gsonVersion}"
-    compile 'org.hildan.fxgson:fx-gson:2.0.0'
+    // compile "com.google.code.gson:gson:${gsonVersion}"
+    // compile "org.hildan.fxgson:fx-gson:${fxGsonVersion}"
+    
+    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 
     compile "com.github.TommyYehCool:MyUtils:${myUtilsVersion}"
     
