@@ -277,6 +277,8 @@ public class TestController implements Initializable {
 		consume.setLotteryNo(lotteryNo);
 		try {
 			final String url = mConfig.getHost() + "/consume/add_consume";
+			
+			// FIXME 這邊因為 Consume 裡面資料型態均為 Fx 用, 轉換成 Json 會有問題
 			String jsonData = new Gson().toJson(consume);
 			HttpUtil.sendPostRequest(url, jsonData);
 			
