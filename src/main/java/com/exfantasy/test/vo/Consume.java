@@ -77,13 +77,4 @@ public class Consume {
 	public void setPrize(Integer prize) {
 		this.prize = prize;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Consume [consumeDate=").append(consumeDate).append(", type=").append(type).append(", prodName=")
-				.append(prodName).append(", amount=").append(amount).append(", lotteryNo=").append(lotteryNo)
-				.append(", got=").append(got).append(", prize=").append(prize).append("]");
-		return builder.toString();
-	}
 }
