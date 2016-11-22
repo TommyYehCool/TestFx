@@ -278,8 +278,13 @@ public class TestController implements Initializable {
 		try {
 			final String url = mConfig.getHost() + "/consume/add_consume";
 			
-			// FIXME 這邊因為 Consume 裡面資料型態均為 Fx 用, 轉換成 Json 會有問題
-			String jsonData = new Gson().toJson(consume);
+			// http://stackoverflow.com/questions/32794500/serialize-javafx-model-with-gson
+			Gson gson = 
+					FxGson.coreBuilder()
+						  .registerTypeAdapter(Type.class, new ConsumeTypeAdapter())
+						  .setPrettyPrinting()
+						  .create();
+			String jsonData = gson.toJson(consume);
 			HttpUtil.sendPostRequest(url, jsonData);
 			
 			mConsumes.add(consume);

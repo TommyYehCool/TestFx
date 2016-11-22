@@ -23,5 +23,6 @@ public class ConsumeTypeAdapter extends TypeAdapter<Type> {
 	
 	@Override
 	public void write(JsonWriter out, final Type value) throws IOException {
+		out.value(value.getCode());
 	}
 }
