@@ -23,6 +23,7 @@ dependencies {
     compile "ch.qos.logback:logback-classic:${logbackVersion}"
     
     compile "com.google.code.gson:gson:${gsonVersion}"
+    compile 'org.hildan.fxgson:fx-gson:2.0.0'
 
     compile "com.github.TommyYehCool:MyUtils:${myUtilsVersion}"
     

@@ -10,9 +10,11 @@ import java.util.ResourceBundle;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.hildan.fxgson.FxGson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.exfantasy.test.adapter.ConsumeTypeAdapter;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
@@ -23,7 +25,6 @@ import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
 import com.exfantasy.utils.json.GsonLocalDateDeserializer;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -268,7 +269,12 @@ public class TestController implements Initializable {
 		Integer amount = Integer.parseInt(tfdAmount.getText());
 		String lotteryNo = tfdLotteryNo.getText();
 		
-		Consume consume = new Consume(consumeDate, type, prodName, amount, lotteryNo);
+		Consume consume = new Consume();
+		consume.setConsumeDate(consumeDate);
+		consume.setType(type);
+		consume.setProdName(prodName);
+		consume.setAmount(amount);
+		consume.setLotteryNo(lotteryNo);
 		try {
 			final String url = mConfig.getHost() + "/consume/add_consume";
 			String jsonData = new Gson().toJson(consume);
@@ -309,12 +315,17 @@ public class TestController implements Initializable {
 		final String url = mConfig.getHost() + "/consume/get_consume" + uriBuilder.toString();
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
+			
 			// http://stackoverflow.com/questions/30652314/gson-datetypeexception-when-converting-date-in-typed-in-milliseconds
-			Gson gson =
-				    new GsonBuilder()
-				    	.registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
-				        .create();
+			// https://github.com/joffrey-bion/fx-gson
+			Gson gson = 
+				FxGson.coreBuilder()
+					  .registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
+					  .registerTypeAdapter(Type.class, new ConsumeTypeAdapter())
+					  .create();
+
 			Consume[] consumes = gson.fromJson(respData, Consume[].class);
+			
 			mConsumes.clear();
 			mConsumes.addAll(Arrays.asList(consumes));
 		} catch (HttpUtilException e) {
