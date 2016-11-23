@@ -14,7 +14,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.exfantasy.test.adapter.ConsumeTypeAdapter;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
@@ -23,12 +22,10 @@ import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
-import com.exfantasy.utils.json.GsonLocalDateDeserializer;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
