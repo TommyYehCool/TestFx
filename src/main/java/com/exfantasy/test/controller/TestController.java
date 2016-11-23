@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
@@ -45,7 +46,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 
 public class TestController implements Initializable {
@@ -93,11 +96,16 @@ public class TestController implements Initializable {
 	@FXML
 	private Label lblProcessResult;
 	
-	private final Image gotImage = createImage(20, 20, Color.GREEN);
+	private final Image gotImage = createImage();
     
-    private final Image createImage(int w, int h, Color color) {
-        Rectangle rect = new Rectangle(w, h, color);
-        return rect.snapshot(null, null);
+    private final Image createImage() {
+    	Circle circle = new Circle();
+    	circle.setRadius(5);
+    	circle.setFill(Color.WHITE);
+        circle.setStroke(Color.GREEN);
+        circle.setStrokeWidth(3);
+        circle.setStrokeType(StrokeType.OUTSIDE);
+        return circle.snapshot(null, null);
     }
 
 	public void setStage(Stage stage) {
@@ -233,6 +241,9 @@ public class TestController implements Initializable {
 					@Override
 					protected void updateItem(Boolean got, boolean empty) {
 						super.updateItem(got, empty);
+						
+						// http://stackoverflow.com/questions/13455326/javafx-tableview-text-alignment
+						this.setAlignment(Pos.CENTER);
 						if (empty) {
 							setGraphic(null);
 						}
