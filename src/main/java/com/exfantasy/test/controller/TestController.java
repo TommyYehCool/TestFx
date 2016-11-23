@@ -22,9 +22,7 @@ import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
@@ -285,12 +283,17 @@ public class TestController implements Initializable {
 			HttpUtil.sendPostRequest(url, jsonData);
 			
 			mConsumes.add(consume);
+			
+			showMsg("新增成功");
+			
 		} catch (HttpUtilException e) {
 			String errorMsg = "新增消費資料失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			String errorMsg = "轉換 json 為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
 		}
 	}
 
@@ -332,22 +335,21 @@ public class TestController implements Initializable {
 //
 //			Consume[] consumes = gson.fromJson(respData, Consume[].class);
 			
-			// 試看看 Jackson deserializer
 			Consume[] consumes = new Consume[0];
 			ObjectMapper mapper = new ObjectMapper();
-			try {
-				consumes = mapper.readValue(respData, Consume[].class);
-			} catch (JsonParseException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			consumes = mapper.readValue(respData, Consume[].class);
+
 			mConsumes.clear();
 			mConsumes.addAll(Arrays.asList(consumes));
+			
+			showMsg("查詢成功, 共 " + consumes.length + " 筆資料");
+			
 		} catch (HttpUtilException e) {
 			String errorMsg = "查詢消費資料失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (IOException e) {
+			String errorMsg = "查詢成功, 但轉換為物件失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		}
@@ -362,6 +364,8 @@ public class TestController implements Initializable {
 		tfdLotteryNo.setText("");
 		dpStartDate.setValue(null);
 		dpEndDate.setValue(null);
+		
+		showMsg("清除成功");
 	}
 	
 	private void showMsg(String msg) {
