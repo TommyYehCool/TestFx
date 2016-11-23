@@ -26,6 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,13 +34,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class TestController implements Initializable {
@@ -86,6 +92,13 @@ public class TestController implements Initializable {
 
 	@FXML
 	private Label lblProcessResult;
+	
+	private final Image gotImage = createImage(20, 20, Color.GREEN);
+    
+    private final Image createImage(int w, int h, Color color) {
+        Rectangle rect = new Rectangle(w, h, color);
+        return rect.snapshot(null, null);
+    }
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -210,9 +223,34 @@ public class TestController implements Initializable {
 			// 設定 PropertyValueFactory 到 TableColumn
 			TableColumn column = columns.get(tableColIndex);
 			column.setCellValueFactory(propValFactory);
+			
+			// 是否中獎欄位, 判斷是否中獎塞入圖式
+			// 參考: http://stackoverflow.com/questions/34896299/javafx-change-tablecell-column-of-selected-tablerow-in-a-tableview
+			if (tableColDef == TableColDef.GOT) {
+				column.setCellFactory(col -> new TableCell<Consume, Boolean>() {
+					private final ImageView imageView = new ImageView();
+					
+					@Override
+					protected void updateItem(Boolean got, boolean empty) {
+						super.updateItem(got, empty);
+						if (empty) {
+							setGraphic(null);
+						}
+						else {
+							if (got) {
+								imageView.setImage(gotImage);
+								setGraphic(imageView);
+							}
+							else {
+								setGraphic(null);
+							}
+						}
+					}
+				});
+			}
 		}
 	}
-
+	
 	@FXML
 	public void handleButtonsAction(ActionEvent event) {
 		if (event.getSource().equals(btnInsert)) {

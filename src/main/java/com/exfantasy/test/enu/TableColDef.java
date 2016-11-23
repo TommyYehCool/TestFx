@@ -1,7 +1,7 @@
 package com.exfantasy.test.enu;
 
 public enum TableColDef {
-	IS_GOT(0, DataType.Boolean, "isGot"), 
+	GOT(0, DataType.Boolean, "got"), 
 	PRIZE(1, DataType.Integr, "prize"), 
 	LOTTERY_NO(2, DataType.String, "lotteryNo"), 
 	CONSUME_DATE(3, DataType.LocalDate, "consumeDate"), 
