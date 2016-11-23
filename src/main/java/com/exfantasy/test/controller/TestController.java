@@ -384,14 +384,16 @@ public class TestController implements Initializable {
 //
 //			Consume[] consumes = gson.fromJson(respData, Consume[].class);
 			
-			Consume[] consumes = new Consume[0];
 			ObjectMapper mapper = new ObjectMapper();
-			consumes = mapper.readValue(respData, Consume[].class);
+			final Consume[] consumes = mapper.readValue(respData, Consume[].class);
 
 			mConsumes.clear();
 			mConsumes.addAll(Arrays.asList(consumes));
 			
-			showMsg("查詢成功, 共 " + consumes.length + " 筆資料");
+			new Thread(() -> {
+				int totalSpent = getTotalSpent(consumes);
+				showMsg("查詢成功, 共 " + consumes.length + " 筆資料, 總花費: $" + totalSpent);
+			}).start();
 			
 		} catch (HttpUtilException e) {
 			String errorMsg = "查詢消費資料失敗";
@@ -402,6 +404,14 @@ public class TestController implements Initializable {
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		}
+	}
+
+	private int getTotalSpent(Consume[] consumes) {
+		int totalSpent = 0;
+		for (Consume consume : consumes) {
+			totalSpent += consume.getAmount();
+		}
+		return totalSpent;
 	}
 
 	private void makeClear() {
