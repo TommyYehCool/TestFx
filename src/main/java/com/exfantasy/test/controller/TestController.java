@@ -464,8 +464,9 @@ public class TestController implements Initializable {
 			String jsonData = mapper.writeValueAsString(consume);
 			
 			HttpUtil.sendPostRequest(url, jsonData);
-			
-			mConsumes.add(consume);
+
+			// 加在第一筆
+			mConsumes.add(0, consume);
 			
 			showMsg("新增成功");
 			
