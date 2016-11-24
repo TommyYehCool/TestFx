@@ -29,6 +29,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -40,13 +41,18 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.DefaultStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class TestController implements Initializable {
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
@@ -120,7 +126,7 @@ public class TestController implements Initializable {
 		
 		new Thread(() -> {
 			loginToSever();
-		}).start();;
+		}).start();
 	}
 	
 	private void setAquaFxStyle() {
@@ -194,6 +200,8 @@ public class TestController implements Initializable {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void defineTableColumnCellFactory() {
+		tvConsumes.setEditable(true);
+		
 		ObservableList<TableColumn<Consume, ?>> columns = tvConsumes.getColumns();
 		
 		for (int tableColIndex = 0; tableColIndex < columns.size(); tableColIndex++) {
@@ -230,6 +238,25 @@ public class TestController implements Initializable {
 			TableColumn column = columns.get(tableColIndex);
 			column.setCellValueFactory(propValFactory);
 			
+			// 若 Table 欄位可編輯
+			if (tableColDef.isEditable()) {
+				// 參考: http://blog.csdn.net/slf2046/article/details/52813130
+				StringConverter converter = null;
+				if (dataType == DataType.String) {
+					converter = new DefaultStringConverter();
+				}
+				else if (dataType == DataType.Integr) {
+					converter = new IntegerStringConverter();
+				}
+				column.setCellFactory(TextFieldTableCell.forTableColumn(converter));
+				column.setOnEditCommit(new EventHandler<CellEditEvent<Consume, ?>>() {
+					@Override
+					public void handle(CellEditEvent<Consume, ?> event) {
+						processCellEdit(tableColDef, event);
+					}
+				});
+			}
+			
 			// 是否中獎欄位, 判斷是否中獎塞入圖式
 			// 參考: http://stackoverflow.com/questions/34896299/javafx-change-tablecell-column-of-selected-tablerow-in-a-tableview
 			if (tableColDef == TableColDef.GOT) {
@@ -257,7 +284,7 @@ public class TestController implements Initializable {
 					}
 				});
 			}
-			// 獎金欄位
+			// 獎金欄位, 若為 0 不顯示
 			// http://code.makery.ch/blog/javafx-8-tableview-cell-renderer/
 			else if (tableColDef == TableColDef.PRIZE) {
 				column.setCellFactory(col -> new TableCell<Consume, Integer>() {
@@ -283,6 +310,51 @@ public class TestController implements Initializable {
 		}
 	}
 	
+	protected void processCellEdit(TableColDef tableColDef, CellEditEvent<Consume, ?> event) {
+		Consume consume = (Consume) event.getTableView().getItems().get(event.getTablePosition().getRow());
+		switch (tableColDef) {
+			case AMOUNT:
+				int newAmount = (Integer) event.getNewValue();
+				consume.setAmount(newAmount);
+				break;
+				
+			case PROD_NAME:
+				String newProdName = (String) event.getNewValue();
+				consume.setProdName(newProdName);
+				break;
+				
+			// 其他不可修改, 這邊不會跑到
+			default:
+				break;
+		}
+
+		new Thread(() -> {
+			updateConsume(consume);
+		}).start();
+	}
+
+	private void updateConsume(Consume consume) {
+		try {
+			final String url = mConfig.getHost() + "/consume/upd_consume";
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(consume);
+			
+			HttpUtil.sendPostRequest(url, jsonData);
+			
+			showMsg("更新成功");
+			
+		} catch (HttpUtilException e) {
+			String errorMsg = "更新消費資料失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (JsonProcessingException e) {
+			String errorMsg = "轉換 json 為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
+	}
+
 	@FXML
 	public void handleButtonsAction(ActionEvent event) {
 		if (event.getSource().equals(btnInsert)) {
