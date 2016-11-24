@@ -35,8 +35,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -195,9 +197,48 @@ public class TestController implements Initializable {
 		
 		defineTableColumnCellFactory();
 		
+		defineTableContextMenu();
+		
 		tvConsumes.setItems(mConsumes);
 	}
 	
+	private void defineTableContextMenu() {
+		// 參考: http://stackoverflow.com/questions/20802208/delete-a-row-from-a-javafx-table-using-context-menu
+		MenuItem menuDel = new MenuItem("刪除");
+		menuDel.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent t) {
+		    	Consume selectedConsume = tvConsumes.getSelectionModel().getSelectedItem();
+		    	makeDelete(selectedConsume);
+		    }
+		});
+		tvConsumes.setContextMenu(new ContextMenu(menuDel));
+	}
+
+	private void makeDelete(Consume consumeToDelete) {
+		try {
+			final String url = mConfig.getHost() + "/consume/del_consume";
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(consumeToDelete);
+			
+			HttpUtil.sendPostRequest(url, jsonData);
+
+			mConsumes.remove(consumeToDelete);
+			
+			showMsg("刪除成功");
+			
+		} catch (HttpUtilException e) {
+			String errorMsg = "刪除消費資料失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (JsonProcessingException e) {
+			String errorMsg = "轉換 json 為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void defineTableColumnCellFactory() {
 		tvConsumes.setEditable(true);
