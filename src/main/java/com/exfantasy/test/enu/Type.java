@@ -1,7 +1,7 @@
 package com.exfantasy.test.enu;
 
 public enum Type {
-	ALL(0, "全部"),
+	ALL(0, ""),
 	BREAKFAST(1, "早餐"),
 	LUNCH(2, "中餐"),
 	DINNER(3, "晚餐"),

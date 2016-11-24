@@ -280,7 +280,7 @@ public class TestController implements Initializable {
 			return false;
 		}
 		Type type = cmbTypes.getValue();
-		if (type == null) {
+		if (type == null || type == Type.ALL) {
 			showErrorMsg("請選擇類別");
 			return false;
 		}
