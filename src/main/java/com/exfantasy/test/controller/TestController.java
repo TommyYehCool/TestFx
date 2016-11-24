@@ -14,6 +14,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.exfantasy.test.cnst.ApiCnst;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
@@ -215,30 +216,6 @@ public class TestController implements Initializable {
 		tvConsumes.setContextMenu(new ContextMenu(menuDel));
 	}
 
-	private void makeDelete(Consume consumeToDelete) {
-		try {
-			final String url = mConfig.getHost() + "/consume/del_consume";
-			
-			ObjectMapper mapper = new ObjectMapper();
-			String jsonData = mapper.writeValueAsString(consumeToDelete);
-			
-			HttpUtil.sendPostRequest(url, jsonData);
-
-			mConsumes.remove(consumeToDelete);
-			
-			showMsg("刪除成功");
-			
-		} catch (HttpUtilException e) {
-			String errorMsg = "刪除消費資料失敗";
-			logger.error(errorMsg, e);
-			showErrorMsg(errorMsg);
-		} catch (JsonProcessingException e) {
-			String errorMsg = "轉換 json 為物件失敗";
-			logger.error(errorMsg, e);
-			showErrorMsg(errorMsg);
-		}
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void defineTableColumnCellFactory() {
 		tvConsumes.setEditable(true);
@@ -370,30 +347,8 @@ public class TestController implements Initializable {
 		}
 
 		new Thread(() -> {
-			updateConsume(consume);
+			makeUpdate(consume);
 		}).start();
-	}
-
-	private void updateConsume(Consume consume) {
-		try {
-			final String url = mConfig.getHost() + "/consume/upd_consume";
-			
-			ObjectMapper mapper = new ObjectMapper();
-			String jsonData = mapper.writeValueAsString(consume);
-			
-			HttpUtil.sendPostRequest(url, jsonData);
-			
-			showMsg("更新成功");
-			
-		} catch (HttpUtilException e) {
-			String errorMsg = "更新消費資料失敗";
-			logger.error(errorMsg, e);
-			showErrorMsg(errorMsg);
-		} catch (JsonProcessingException e) {
-			String errorMsg = "轉換 json 為物件失敗";
-			logger.error(errorMsg, e);
-			showErrorMsg(errorMsg);
-		}
 	}
 
 	@FXML
@@ -458,7 +413,7 @@ public class TestController implements Initializable {
 		consume.setAmount(amount);
 		consume.setLotteryNo(lotteryNo);
 		try {
-			final String url = mConfig.getHost() + "/consume/add_consume";
+			final String url = mConfig.getHost() + ApiCnst.INS_CONSUME;
 			
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonData = mapper.writeValueAsString(consume);
@@ -472,6 +427,52 @@ public class TestController implements Initializable {
 			
 		} catch (HttpUtilException e) {
 			String errorMsg = "新增消費資料失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (JsonProcessingException e) {
+			String errorMsg = "轉換 json 為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
+	}
+
+	private void makeUpdate(Consume consume) {
+		try {
+			final String url = mConfig.getHost() + ApiCnst.UPD_CONSUME;
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(consume);
+			
+			HttpUtil.sendPostRequest(url, jsonData);
+			
+			showMsg("更新成功");
+			
+		} catch (HttpUtilException e) {
+			String errorMsg = "更新消費資料失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (JsonProcessingException e) {
+			String errorMsg = "轉換 json 為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
+	}
+
+	private void makeDelete(Consume consumeToDelete) {
+		try {
+			final String url = mConfig.getHost() + ApiCnst.DEL_CONSUME;
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(consumeToDelete);
+			
+			HttpUtil.sendPostRequest(url, jsonData);
+	
+			mConsumes.remove(consumeToDelete);
+			
+			showMsg("刪除成功");
+			
+		} catch (HttpUtilException e) {
+			String errorMsg = "刪除消費資料失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		} catch (JsonProcessingException e) {
@@ -505,7 +506,7 @@ public class TestController implements Initializable {
 			uriBuilder.addParameter("lotteryNo", lotteryNo);
 		}
 		
-		final String url = mConfig.getHost() + "/consume/get_consume" + uriBuilder.toString();
+		final String url = mConfig.getHost() + ApiCnst.QRY_CONSUME + uriBuilder.toString();
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
 			
