@@ -242,7 +242,7 @@ public class TestController implements Initializable {
 						
 						// http://stackoverflow.com/questions/13455326/javafx-tableview-text-alignment
 						this.setAlignment(Pos.CENTER);
-						if (empty) {
+						if (got == null || empty) {
 							setGraphic(null);
 						}
 						else {
@@ -252,6 +252,29 @@ public class TestController implements Initializable {
 							}
 							else {
 								setGraphic(null);
+							}
+						}
+					}
+				});
+			}
+			// 獎金欄位
+			// http://code.makery.ch/blog/javafx-8-tableview-cell-renderer/
+			else if (tableColDef == TableColDef.PRIZE) {
+				column.setCellFactory(col -> new TableCell<Consume, Integer>() {
+					@Override
+					protected void updateItem(Integer prize, boolean empty) {
+						super.updateItem(prize, empty);
+
+						this.setAlignment(Pos.CENTER);
+						if (prize == null || empty) {
+							setText(null);
+						}
+						else {
+							if (prize != 0) {
+								setText(String.valueOf(prize));
+							}
+							else {
+								setText(null);
 							}
 						}
 					}
