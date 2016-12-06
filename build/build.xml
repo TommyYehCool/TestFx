@@ -235,8 +235,8 @@
 
 			<!-- Custom JVM setup for application -->
 			<fx:platform basedir="${java.home}">
-				<fx:jvmarg value="-Dlogback.configurationFile=&quot;./config/logback.xml&quot;"/>
-				<fx:jvmarg value="-Dfile.encoding=&quot;UTF-8&quot;"/>
+				<fx:jvmarg value="-Dfile.encoding=UTF8"/>
+				<fx:jvmarg value="-Dlogback.configurationFile=./config/logback.xml"/>
 			</fx:platform>
 
 			<fx:info title="TestFx" vendor="com.exfantasy"/>
