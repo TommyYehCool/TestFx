@@ -3,9 +3,9 @@ package com.exfantasy.test.vo;
 import java.time.LocalDate;
 
 import com.exfantasy.test.enu.Type;
-import com.exfantasy.test.serializer.ConsumeDeserializer;
-import com.exfantasy.test.serializer.JsonConsumeTypeSerializer;
-import com.exfantasy.test.serializer.JsonLocalDateSerializer;
+import com.exfantasy.test.json.deserializer.ConsumeDeserializer;
+import com.exfantasy.test.json.serializer.JsonConsumeTypeSerializer;
+import com.exfantasy.test.json.serializer.JsonLocalDateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

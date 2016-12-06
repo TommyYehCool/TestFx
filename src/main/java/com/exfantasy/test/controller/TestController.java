@@ -15,12 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.exfantasy.test.cnst.ApiCnst;
+import com.exfantasy.test.cnst.ResultCode;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
 import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.vo.Consume;
+import com.exfantasy.test.vo.ResponseVo;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -415,22 +417,32 @@ public class TestController implements Initializable {
 		try {
 			final String url = mConfig.getHost() + ApiCnst.INS_CONSUME;
 			
-			ObjectMapper mapper = new ObjectMapper();
-			String jsonData = mapper.writeValueAsString(consume);
+			ObjectMapper reqMapper = new ObjectMapper();
+			String jsonData = reqMapper.writeValueAsString(consume);
 			
-			HttpUtil.sendPostRequest(url, jsonData);
+			String respData = HttpUtil.sendPostRequest(url, jsonData);
+			
+			ObjectMapper respMapper = new ObjectMapper();
+			final ResponseVo responseVo = respMapper.readValue(respData, ResponseVo.class);
 
-			// 加在第一筆
-			mConsumes.add(0, consume);
-			
-			showMsg("新增成功");
-			
+			if (responseVo.getResultCode() == ResultCode.SUCCESS) {
+				// 加在第一筆
+				mConsumes.add(0, consume);
+				showMsg("新增成功");
+			}
+			else if (responseVo.getResultCode() == ResultCode.DUPLICATE_KEY) {
+				showErrorMsg("資料重複");
+			}
 		} catch (HttpUtilException e) {
 			String errorMsg = "新增消費資料失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		} catch (JsonProcessingException e) {
 			String errorMsg = "轉換 json 為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (IOException e) {
+			String errorMsg = "解析回應資料失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		}

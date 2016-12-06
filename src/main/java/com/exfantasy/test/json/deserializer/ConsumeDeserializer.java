@@ -1,4 +1,4 @@
-package com.exfantasy.test.serializer;
+package com.exfantasy.test.json.deserializer;
 
 import java.io.IOException;
 import java.time.LocalDate;
