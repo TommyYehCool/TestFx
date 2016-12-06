@@ -194,6 +194,7 @@
 		<fx:resources id="appRes">
 			<fx:fileset dir="dist" includes="TestFx.jar"/>
 			<fx:fileset dir="dist" includes="libs/*"/>
+			<fx:fileset dir="dist" includes="config/*"/>
 		</fx:resources>
 	
 		<fx:application id="fxApplication"
