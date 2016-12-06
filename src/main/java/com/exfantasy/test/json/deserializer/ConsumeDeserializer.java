@@ -28,7 +28,7 @@ public class ConsumeDeserializer extends JsonDeserializer<Consume> {
 	    String prodName = node.get("prodName").asText();
 	    int amount = node.get("amount").asInt();
 	    String lotteryNo = node.get("lotteryNo").asText();
-	    boolean got = node.get("got").asBoolean();
+	    int got = node.get("got").asInt();
 	    int prize = node.get("prize").asInt();
 	    
 	    Consume consume = new Consume();

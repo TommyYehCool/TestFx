@@ -32,7 +32,7 @@ public class Consume {
 	private IntegerProperty amount = new SimpleIntegerProperty();
 	private StringProperty lotteryNo = new SimpleStringProperty();
 	
-	private BooleanProperty got = new SimpleBooleanProperty();
+	private IntegerProperty got = new SimpleIntegerProperty();
 	private IntegerProperty prize = new SimpleIntegerProperty();
 
 	@JsonSerialize(using = JsonLocalDateSerializer.class)
@@ -77,11 +77,11 @@ public class Consume {
 		this.lotteryNo.set(lotteryNo);
 	}
 	
-	public Boolean isGot() {
+	public Integer getGot() {
 		return got.get();
 	}
 
-	public void setGot(Boolean got) {
+	public void setGot(Integer got) {
 		this.got.set(got);
 	}
 

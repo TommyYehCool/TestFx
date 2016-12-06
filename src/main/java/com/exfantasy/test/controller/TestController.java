@@ -270,11 +270,11 @@ public class TestController implements Initializable {
 			// 是否中獎欄位, 判斷是否中獎塞入圖式
 			// 參考: http://stackoverflow.com/questions/34896299/javafx-change-tablecell-column-of-selected-tablerow-in-a-tableview
 			if (tableColDef == TableColDef.GOT) {
-				column.setCellFactory(col -> new TableCell<Consume, Boolean>() {
+				column.setCellFactory(col -> new TableCell<Consume, Integer>() {
 					private final ImageView imageView = new ImageView();
 					
 					@Override
-					protected void updateItem(Boolean got, boolean empty) {
+					protected void updateItem(Integer got, boolean empty) {
 						super.updateItem(got, empty);
 						
 						// http://stackoverflow.com/questions/13455326/javafx-tableview-text-alignment
@@ -282,15 +282,16 @@ public class TestController implements Initializable {
 						if (got == null || empty) {
 							setGraphic(null);
 						}
-						else {
-							if (got) {
-								imageView.setImage(gotImage);
-								setGraphic(imageView);
-							}
-							else {
-								imageView.setImage(notGotImage);
-								setGraphic(imageView);
-							}
+						else if (got == -1) {
+							setGraphic(null);
+						}
+						else if (got == 1) {
+							imageView.setImage(gotImage);
+							setGraphic(imageView);
+						}
+						else if (got == 0) {
+							imageView.setImage(notGotImage);
+							setGraphic(imageView);
 						}
 					}
 				});
