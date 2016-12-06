@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	<property name="LOG_HOME" value="D:/TestFxLog" />
+	<property name="CHARSET" value="UTF-8" />
+	<property name="PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%-5level][%logger{50}] %m%n" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>[%d][%-5p][%t][%C-%M][Line:%L] %m%n</pattern>
+			<pattern>${PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
 		</encoder>
 	</appender>
+	
+	<appender name="DAILY_ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_HOME}/TestFxLog.log</File>
+		<encoder>
+			<Pattern>${PATTERN}</Pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<FileNamePattern>${LOG_HOME}/TestFxLog.%d{yyyy-MM-dd}.log</FileNamePattern>
 
-	<logger name="com.exfantasy" level="DEBUG" additivity="false">
-		<appender-ref ref="STDOUT" />
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="com.exfantasy" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DAILY_ROLLING_FILE" />
 	</logger>
 
 	<!-- Strictly speaking, the level attribute is not necessary since -->
 	<!-- the level of the root level is set to DEBUG by default. -->
-	<root level="DEBUG">
-		<appender-ref ref="STDOUT" />
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DAILY_ROLLING_FILE" />
 	</root>
 </configuration>
