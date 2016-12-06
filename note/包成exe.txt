@@ -1,1 +1,4 @@
-http://code.makery.ch/library/javafx-8-tutorial/part7/
+1. http://code.makery.ch/library/javafx-8-tutorial/part7/
+
+2. JVM 設定方式 
+	https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html

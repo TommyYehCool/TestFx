@@ -232,8 +232,13 @@
 			outdir="${basedir}/deploy"
 			outfile="TestFx" nativeBundles="exe"
 			updatemode="background" >
-	
-			<fx:platform basedir="${java.home}"/>
+
+			<!-- Custom JVM setup for application -->
+			<fx:platform basedir="${java.home}">
+				<fx:jvmarg value="-Dlogback.configurationFile=&quot;./config/logback.xml&quot;"/>
+				<fx:jvmarg value="-Dfile.encoding=&quot;UTF-8&quot;"/>
+			</fx:platform>
+
 			<fx:info title="TestFx" vendor="com.exfantasy"/>
 	
 			<fx:application refId="fxApplication"/>
