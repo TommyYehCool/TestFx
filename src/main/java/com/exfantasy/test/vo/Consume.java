@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.json.deserializer.ConsumeDeserializer;
-import com.exfantasy.test.json.serializer.JsonConsumeTypeSerializer;
-import com.exfantasy.test.json.serializer.JsonLocalDateSerializer;
+import com.exfantasy.test.json.serializer.ConsumeTypeSerializer;
+import com.exfantasy.test.json.serializer.LocalDateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -33,7 +33,7 @@ public class Consume {
 	private IntegerProperty got = new SimpleIntegerProperty();
 	private IntegerProperty prize = new SimpleIntegerProperty();
 
-	@JsonSerialize(using = JsonLocalDateSerializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	public LocalDate getConsumeDate() {
 		return consumeDate.get();
 	}
@@ -42,7 +42,7 @@ public class Consume {
 		this.consumeDate.set(consumeDate);
 	}
 
-	@JsonSerialize(using = JsonConsumeTypeSerializer.class)
+	@JsonSerialize(using = ConsumeTypeSerializer.class)
 	public Type getType() {
 		return type.get();
 	}

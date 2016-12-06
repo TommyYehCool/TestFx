@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-public class JsonConsumeTypeSerializer extends JsonSerializer<Type> {
+public class ConsumeTypeSerializer extends JsonSerializer<Type> {
 
 	@Override
 	public void serialize(Type value, JsonGenerator gen, SerializerProvider serializers)
