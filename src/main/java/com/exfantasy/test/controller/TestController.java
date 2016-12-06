@@ -21,6 +21,7 @@ import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
 import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
+import com.exfantasy.test.util.ImageUtil;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.test.vo.ResponseVo;
 import com.exfantasy.utils.http.HttpUtil;
@@ -44,16 +45,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
@@ -105,18 +104,9 @@ public class TestController implements Initializable {
 	@FXML
 	private Label lblProcessResult;
 	
-	private final Image gotImage = createImage();
+	private final Image gotImage = ImageUtil.createGotImage();
+	private final Image notGotImage = ImageUtil.createNotGotImage();
     
-    private final Image createImage() {
-    	Circle circle = new Circle();
-    	circle.setRadius(5);
-    	circle.setFill(Color.WHITE);
-        circle.setStroke(Color.GREEN);
-        circle.setStrokeWidth(3);
-        circle.setStrokeType(StrokeType.OUTSIDE);
-        return circle.snapshot(null, null);
-    }
-
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -298,7 +288,8 @@ public class TestController implements Initializable {
 								setGraphic(imageView);
 							}
 							else {
-								setGraphic(null);
+								imageView.setImage(notGotImage);
+								setGraphic(imageView);
 							}
 						}
 					}
