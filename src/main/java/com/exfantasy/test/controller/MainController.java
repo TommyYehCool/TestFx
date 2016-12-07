@@ -58,8 +58,8 @@ import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-public class TestController implements Initializable {
-	private Logger logger = LoggerFactory.getLogger(TestController.class);
+public class MainController implements Initializable {
+	private Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	private Config mConfig;
 	

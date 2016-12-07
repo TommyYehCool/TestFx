@@ -1,7 +1,7 @@
 package com.exfantasy.test.main;
 
 import com.exfantasy.test.cnst.UiCnst;
-import com.exfantasy.test.controller.TestController;
+import com.exfantasy.test.controller.MainController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +20,7 @@ public class TestMain extends Application {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/main.fxml"));
 		Parent root = (Parent) loader.load();
 
-		TestController controller = (TestController) loader.getController();
+		MainController controller = (MainController) loader.getController();
 		controller.setStage(stage);
 
 		Scene scene = new Scene(root);
