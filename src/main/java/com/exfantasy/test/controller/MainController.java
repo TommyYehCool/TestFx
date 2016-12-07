@@ -115,8 +115,6 @@ public class MainController implements Initializable {
 	}
 	
 	private void initComponents() {
-		changeButtonsStateByIsFxAppThread(true);
-		
 		fillTypeCombos();
 		
 		initTable();
