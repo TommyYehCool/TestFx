@@ -20,6 +20,8 @@ public class ImageUtil {
     }
 	
 	public static Image createNotGotImage() {
+		Group group = new Group();
+		
 		Line line1 = new Line(0, 0, 10, 10);
 		line1.setStroke(Color.RED);
 		line1.setStrokeWidth(3);
@@ -28,7 +30,8 @@ public class ImageUtil {
 		line2.setStroke(Color.RED);
 		line2.setStrokeWidth(3);
 
-		Group group = new Group(line1, line2);
+		group.getChildren().addAll(line1, line2);
+
 		return group.snapshot(null, null);
 	}
 }
