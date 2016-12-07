@@ -16,7 +16,7 @@ ext {
 	
 	jacksonVersion = '2.8.5'
 	
-	myUtilsVersion = '1.0.19'
+	myUtilsVersion = '1.0.20'
 	
 	junitVersion = '4.12'
 }

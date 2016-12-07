@@ -19,6 +19,7 @@ import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.util.StageChangeUtil;
 import com.exfantasy.utils.http.HttpUtil;
+import com.exfantasy.utils.http.HttpUtilException;
 
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -121,9 +122,21 @@ public class LoginController implements Initializable {
         	util.newStage(stage, lblClose, "/view/fxml/main.fxml", UiCnst.UI_TITLE, true, StageStyle.DECORATED, false);
         });
         service.setOnFailed((WorkerStateEvent wst) -> {
+        	String errorMsg = "";
+        	
         	imgLoading.setVisible(false);
         	Throwable exception = service.getException();
-        	StageChangeUtil.dialog(Alert.AlertType.ERROR, "登入失敗");
+        	if (exception instanceof HttpUtilException) {
+        		HttpUtilException ex = (HttpUtilException) exception;
+        		int errorCode = ex.getErrorCode();
+        		if (errorCode == HttpUtilException.COMMUNICATE_ERROR) {
+        			errorMsg = "連線至 server 失敗, host: " + mConfig.getHost();
+        		}
+        		else if (errorCode == HttpUtilException.LOGIN_FAILED) {
+        			errorMsg = "請確認帳號密碼是否正確";
+        		}
+        	}
+        	StageChangeUtil.dialog(Alert.AlertType.ERROR, "登入失敗\n" + errorMsg);
         });
     }
 }
