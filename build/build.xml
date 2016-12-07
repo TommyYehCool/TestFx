@@ -25,6 +25,11 @@
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
+			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.github.TommyYehCool\MyUtils\1.0.20\7fab28486418e472636630b4198bbafdf26ba324">
+				<filename name="MyUtils-1.0.20.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
 			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.8.0\45b426f7796b741035581a176744d91090e2e6fb">
 				<filename name="jackson-annotations-2.8.0.jar"/>
 			</fileset>
@@ -42,11 +47,6 @@
 		<copy todir="externalLibs">
 			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.8.5\60d059f5d2930ccd1ef03535b713fd9f933d1ba7">
 				<filename name="jackson-core-2.8.5.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.github.TommyYehCool\MyUtils\1.0.19\7f9a10c7dcaaca8e3e3420c3717e5b93f0f94832">
-				<filename name="MyUtils-1.0.19.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
@@ -123,10 +123,10 @@
 				<include name="jackson-core-2.8.5.jar"/>
 				<include name="jsoup-1.10.1.jar"/>
 				<include name="commons-logging-1.2.jar"/>
+				<include name="MyUtils-1.0.20.jar"/>
 				<include name="hamcrest-core-1.3.jar"/>
 				<include name="httpclient-4.5.2.jar"/>
 				<include name="slf4j-api-1.7.21.jar"/>
-				<include name="MyUtils-1.0.19.jar"/>
 				<include name="logback-core-1.1.5.jar"/>
 				<include name="aquafx-0.1.jar"/>
 				<include name="commons-codec-1.9.jar"/>
@@ -203,7 +203,7 @@
 		<!-- 加上版本號 -->
 		<fx:application id="fxApplication"
 			name="ConsumeRecorder"
-			mainClass="com.exfantasy.test.main.TestMain"
+			mainClass="com.exfantasy.test.main.ConsumeRecordMain"
 			version="1.0"
 		/>
 	
