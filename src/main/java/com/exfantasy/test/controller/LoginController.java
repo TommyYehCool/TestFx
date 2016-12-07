@@ -1,13 +1,24 @@
 package com.exfantasy.test.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.exfantasy.test.animation.FadeInLeftTransition;
 import com.exfantasy.test.animation.FadeInLeftTransition1;
 import com.exfantasy.test.animation.FadeInRightTransition;
+import com.exfantasy.test.cnst.ApiCnst;
+import com.exfantasy.test.cnst.UiCnst;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
+import com.exfantasy.test.util.StageChangeUtil;
+import com.exfantasy.utils.http.HttpUtil;
 
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -24,8 +35,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.control.Alert;
 
 public class LoginController implements Initializable {
+	private Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	private Config mConfig;
 	
@@ -82,21 +96,18 @@ public class LoginController implements Initializable {
         String username = txtUsername.getText();
 		String password = txtPassword.getText();
 
-//		if (username.equals("herudi") && password.equals("herudi")) {
-//            StageChangeUtil util = new StageChangeUtil();
-//            util.newStage(stage, lblClose, "/herudi/view/formMenu.fxml", "Test App", true, StageStyle.UNDECORATED, false);
-//        } else{
-//            StageChangeUtil.dialog(Alert.AlertType.ERROR, "Error Login, Please Chek Username And Password");
-//        }
-		
 		Service<Boolean> service = new Service<Boolean>() {
             @Override
             protected Task<Boolean> createTask() {
                 return new Task<Boolean>() {           
                     @Override
                     protected Boolean call() throws Exception {
-                    	Thread.sleep(2000);
-                    	return true;
+                    	String url = mConfig.getHost() + ApiCnst.LOGIN;
+                    	List<NameValuePair> params = new ArrayList<>();
+                    	params.add(new BasicNameValuePair("username", username));
+                		params.add(new BasicNameValuePair("password", password));
+                		HttpUtil.sendPostRequest(url, params);
+                		return true;
                     }
                 };
             }
@@ -106,7 +117,13 @@ public class LoginController implements Initializable {
         	imgLoading.setVisible(true);
         });
         service.setOnSucceeded((WorkerStateEvent wst) -> {
-            System.out.println("onSucceeded");
+        	StageChangeUtil util = new StageChangeUtil();
+        	util.newStage(stage, lblClose, "/view/fxml/main.fxml", UiCnst.UI_TITLE, true, StageStyle.DECORATED, false);
+        });
+        service.setOnFailed((WorkerStateEvent wst) -> {
+        	imgLoading.setVisible(false);
+        	Throwable exception = service.getException();
+        	StageChangeUtil.dialog(Alert.AlertType.ERROR, "登入失敗");
         });
     }
 }

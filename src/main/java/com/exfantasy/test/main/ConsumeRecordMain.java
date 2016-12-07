@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class SplashScreenWin8 extends Application {
+public class ConsumeRecordMain extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {

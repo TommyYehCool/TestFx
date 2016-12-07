@@ -5,12 +5,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,9 +61,6 @@ public class MainController implements Initializable {
 	private Config mConfig;
 	
 	// ---------------- FX Related ----------------
-	@SuppressWarnings("unused")
-	private Stage stage;
-
 	@FXML
 	private DatePicker dpConsumeDate;
 
@@ -107,10 +101,6 @@ public class MainController implements Initializable {
 	private final Image gotImage = ImageUtil.createGotImage();
 	private final Image notGotImage = ImageUtil.createNotGotImage();
     
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initComponents();
@@ -118,10 +108,6 @@ public class MainController implements Initializable {
 		setAquaFxStyle();
 		
 		loadConfig();
-		
-		new Thread(() -> {
-			loginToSever();
-		}).start();
 	}
 	
 	private void setAquaFxStyle() {
@@ -157,23 +143,6 @@ public class MainController implements Initializable {
 		mConfig = ConfigHolder.getInstance().getConfig();
 	}
 	
-	private void loginToSever() {
-		String url = mConfig.getHost() + "/login";
-
-		List<NameValuePair> params = new ArrayList<>();
-		// FIXME 登入帳號看要怎麼決定
-		params.add(new BasicNameValuePair("username", "tommy.yeh1112@gmail.com"));
-		params.add(new BasicNameValuePair("password", "1234qwer"));
-		try {
-			HttpUtil.sendPostRequest(url, params);
-			changeButtonsState(false);
-			showMsg("登入伺服器成功");
-		} catch (HttpUtilException e) {
-			logger.error("Try to login to url: <{}> failed", url, e);
-			showErrorMsg("嘗試登入伺服器失敗, 網址: " + mConfig.getHost());
-		}
-	}
-
 	private void fillTypeCombos() {
 		Platform.runLater(() -> {
 		    ObservableList<Type> items = cmbTypes.getItems();

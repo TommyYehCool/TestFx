@@ -22,7 +22,7 @@
                   <Font name="Segoe UI" size="48.0" />
                </font>
             </Text>
-            <Text fx:id="lblRudy" fill="WHITE" layoutX="130.0" layoutY="127.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tommy Yeh">
+            <Text fx:id="lblRudy" fill="WHITE" layoutX="130.0" layoutY="127.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consume Record">
                <font>
                   <Font name="Segoe UI" size="18.0" />
                </font>

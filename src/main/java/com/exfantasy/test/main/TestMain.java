@@ -19,10 +19,6 @@ public class TestMain extends Application {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/main.fxml"));
 		Parent root = (Parent) loader.load();
-
-		MainController controller = (MainController) loader.getController();
-		controller.setStage(stage);
-
 		Scene scene = new Scene(root);
 		stage.setTitle(UiCnst.UI_TITLE);
 		stage.setScene(scene);
