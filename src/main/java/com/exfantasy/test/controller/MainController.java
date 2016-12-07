@@ -50,7 +50,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
 import javafx.util.converter.IntegerStringConverter;
