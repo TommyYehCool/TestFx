@@ -1,47 +1,20 @@
 .root{
 	-fx-font-size: 12px;
-    -fx-font-family: "新細明體", "Microsoft YaHei", 'Helvetica', "Verdana", "Arial", "Times New Roman";
 	-fx-text-fill: #403152;
-	-fx-background-color: #F0F8FF;	
+	-fx-background-color: #F0F8FF;
 }
 
 .pane-bg {
 	-fx-background-color: #F0F8FF;	
 }
 
-.chart-border {
-	-fx-border-color: rgb(200, 200, 200);
-	-fx-border-width: 1;
-	-fx-border-radius: 3;	
-}
-
-.border {
-	-fx-border-color: rgb(127, 127, 127);
-	-fx-border-width: 1;
-	-fx-border-radius: 3;	
-}
-
-.title-border-bg {
-	-fx-border-color: rgba(240,255,240);
-	-fx-border-width: 1;
-	-fx-border-radius: 3;	
-	-fx-background-color: rgba(240,255,240,0.7);
-}
-
-.title_lbl {
-    -fx-font-weight: bold;	
-	-fx-text-fill: #5bc0de;
-}
-
-.error_label {
-	-fx-text-fill: red;
+.label {
+	-fx-font-weight: BOLD;
 }
 
 /* Button */
-.button   {
+.button {
     -fx-text-fill: white;
-    -fx-font-weight: bold;
-    
 	-fx-background-color: linear-gradient(rgb(101,189,225), rgb(0,112,192));
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.2) , 5, 0.0 , 0 , 1 ); 
 }
@@ -51,9 +24,8 @@
 }
 
 /* ComboBox*/
-.combo-box-base  {
+.combo-box-base {
     -fx-text-fill: white;
-    -fx-font-weight: bold;
 	-fx-background-color: linear-gradient(rgb(101,189,225), rgb(0,112,192));
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.2) , 5, 0.0 , 0 , 1 );
 }
@@ -112,7 +84,6 @@
 }
 
 .table-view .column-header .label {
-	-fx-font-weight: bold;	
     -fx-text-fill: white;
     -fx-alignment: center;
     -fx-opacity: 1;

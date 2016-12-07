@@ -1,5 +1,7 @@
 package com.exfantasy.test.main;
 
+import java.util.List;
+
 import com.exfantasy.test.cnst.UiCnst;
 
 import javafx.application.Application;
@@ -15,6 +17,12 @@ public class TestMain extends Application {
 		// 導入 AquaFx -> http://aquafx-project.com/documentation.html
 		// FIXME 導入這個會讓 DatePicker 選日期的時候變透明, 再看怎麼辦
 //		AquaFx.style();
+		
+		// 顯示出可使用的 Font Family
+		List<String> families = javafx.scene.text.Font.getFamilies();
+		for (String family : families) {
+			System.out.println(family);
+		}
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/main.fxml"));
 		Parent root = (Parent) loader.load();
