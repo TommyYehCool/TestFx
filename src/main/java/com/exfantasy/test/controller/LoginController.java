@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
-	private Logger logger = LoggerFactory.getLogger(MainController.class);
+	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	private Config mConfig;
 
@@ -119,7 +119,7 @@ public class LoginController implements Initializable {
 		});
 		service.setOnSucceeded((WorkerStateEvent wst) -> {
 			StageChangeUtil util = new StageChangeUtil();
-			util.newStage(stage, lblClose, "/view/fxml/main.fxml", UiCnst.UI_TITLE, true, StageStyle.DECORATED, false);
+			util.changeStage(stage, lblClose, "/view/fxml/main.fxml", UiCnst.UI_TITLE, true, StageStyle.DECORATED, false);
 		});
 		service.setOnFailed((WorkerStateEvent wst) -> {
 			String errorMsg = "";
@@ -131,8 +131,10 @@ public class LoginController implements Initializable {
 				int errorCode = ex.getErrorCode();
 				if (errorCode == HttpUtilException.COMMUNICATE_ERROR) {
 					errorMsg = "連線至 server 失敗, host: " + mConfig.getHost();
+					logger.error(errorMsg, ex);
 				} else if (errorCode == HttpUtilException.LOGIN_FAILED) {
 					errorMsg = "請確認帳號密碼是否正確";
+					logger.warn(errorMsg, ex);
 				}
 			}
 			StageChangeUtil.dialog(Alert.AlertType.ERROR, "登入失敗\n" + errorMsg);

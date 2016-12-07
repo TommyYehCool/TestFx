@@ -67,7 +67,7 @@ public class SplashController implements Initializable {
         });
         service.setOnSucceeded((WorkerStateEvent event) -> {
             StageChangeUtil util = new StageChangeUtil();
-            util.newStage(stage, lblClose, "/view/fxml/login.fxml", UiCnst.UI_TITLE, true, StageStyle.UNDECORATED, false);
+            util.changeStage(stage, lblClose, "/view/fxml/login.fxml", UiCnst.UI_TITLE, true, StageStyle.UNDECORATED, false);
         });
     } 
 }

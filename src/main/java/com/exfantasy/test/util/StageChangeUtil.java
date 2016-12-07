@@ -1,5 +1,8 @@
 package com.exfantasy.test.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class StageChangeUtil {
+	private Logger logger = LoggerFactory.getLogger(StageChangeUtil.class);
 
 	public static void dialog(Alert.AlertType alertType, String msg) {
 		Alert alert = new Alert(alertType, msg);
@@ -17,7 +21,7 @@ public class StageChangeUtil {
 		alert.showAndWait();
 	}
 
-	public void newStage(Stage stage, Label labelToGetCurrentStage, String fxmlToLoad, String title, boolean resize, StageStyle style, boolean maximized) {
+	public void changeStage(Stage stage, Label labelToGetCurrentStage, String fxmlToLoad, String title, boolean resize, StageStyle style, boolean maximized) {
 		try {
 			Stage st = new Stage();
 			stage = (Stage) labelToGetCurrentStage.getScene().getWindow();
@@ -31,6 +35,7 @@ public class StageChangeUtil {
 			st.show();
 			stage.close();
 		} catch (Exception e) {
+			logger.error("Change stage got exception, msg: <{}>", e.getMessage(), e);
 		}
 	}
 }
