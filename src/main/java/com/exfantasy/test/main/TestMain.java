@@ -17,7 +17,7 @@ public class TestMain extends Application {
 		// FIXME 導入這個會讓 DatePicker 選日期的時候變透明, 再看怎麼辦
 //		AquaFx.style();
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/Test.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/main.fxml"));
 		Parent root = (Parent) loader.load();
 
 		TestController controller = (TestController) loader.getController();
