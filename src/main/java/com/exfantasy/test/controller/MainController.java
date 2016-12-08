@@ -372,6 +372,7 @@ public class MainController implements Initializable {
 		consume.setProdName(prodName);
 		consume.setAmount(amount);
 		consume.setLotteryNo(lotteryNo);
+		consume.setGot(-1);
 		try {
 			final String url = mConfig.getHost() + ApiCnst.INS_CONSUME;
 			
