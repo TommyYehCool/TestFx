@@ -98,12 +98,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="D:\TommyWs\TestFx">
-				<include name="src\main\java/**" />
+				<include name="src\test\java/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="D:\TommyWs\TestFx">
-				<include name="src\test\java/**" />
+				<include name="src\main\java/**" />
 			</fileset>
 		</copy>
 	
