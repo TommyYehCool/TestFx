@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<host>http://localhost:8080</host>
+	<host>https://tommywebservice.herokuapp.com</host>
 </config>
