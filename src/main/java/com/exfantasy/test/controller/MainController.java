@@ -134,6 +134,7 @@ public class MainController implements Initializable {
 	private void changeButtonsState(boolean disable) {
 		btnInsert.setDisable(disable);
 		btnQuery.setDisable(disable);
+		btnClear.setDisable(disable);
 	}
 
 	private void loadConfig() {
@@ -478,39 +479,37 @@ public class MainController implements Initializable {
 		}
 		
 		final String url = mConfig.getHost() + ApiCnst.QRY_CONSUME + uriBuilder.toString();
-		try {
-			String respData = HttpUtil.sendGetRequest(url);
-			
-//			// http://stackoverflow.com/questions/30652314/gson-datetypeexception-when-converting-date-in-typed-in-milliseconds
-//			// https://github.com/joffrey-bion/fx-gson
-//			Gson gson = 
-//				FxGson.coreBuilder()
-//					  .registerTypeAdapter(LocalDate.class, new GsonLocalDateDeserializer())
-//					  .registerTypeAdapter(Type.class, new ConsumeTypeAdapter())
-//					  .create();
-//
-//			Consume[] consumes = gson.fromJson(respData, Consume[].class);
-			
-			ObjectMapper mapper = new ObjectMapper();
-			final Consume[] consumes = mapper.readValue(respData, Consume[].class);
+		new Thread(() -> {
+			try {
+				mConsumes.clear();
+				
+				changeButtonsStateByIsFxAppThread(true);
+				
+				String respData = HttpUtil.sendGetRequest(url);
+				
+				ObjectMapper mapper = new ObjectMapper();
+				final Consume[] consumes = mapper.readValue(respData, Consume[].class);
 
-			mConsumes.clear();
-			mConsumes.addAll(Arrays.asList(consumes));
-			
-			new Thread(() -> {
+				mConsumes.clear();
+				mConsumes.addAll(Arrays.asList(consumes));
+				
 				int totalSpent = getTotalSpent(consumes);
 				showMsg("查詢成功, 共 " + consumes.length + " 筆資料, 總花費: $" + totalSpent);
-			}).start();
-			
-		} catch (HttpUtilException e) {
-			String errorMsg = "查詢消費資料失敗";
-			logger.error(errorMsg, e);
-			showErrorMsg(errorMsg);
-		} catch (IOException e) {
-			String errorMsg = "查詢成功, 但轉換為物件失敗";
-			logger.error(errorMsg, e);
-			showErrorMsg(errorMsg);
-		}
+				
+				changeButtonsStateByIsFxAppThread(false);
+				
+			} catch (HttpUtilException e) {
+				String errorMsg = "查詢消費資料失敗";
+				logger.error(errorMsg, e);
+				showErrorMsg(errorMsg);
+				changeButtonsStateByIsFxAppThread(false);
+			} catch (IOException e) {
+				String errorMsg = "查詢成功, 但轉換為物件失敗";
+				logger.error(errorMsg, e);
+				showErrorMsg(errorMsg);
+				changeButtonsStateByIsFxAppThread(false);
+			}
+		}).start();
 	}
 
 	private int getTotalSpent(Consume[] consumes) {
