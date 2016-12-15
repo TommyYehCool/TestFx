@@ -357,6 +357,10 @@ public class MainController implements Initializable {
 			showErrorMsg("請輸入發票號碼");
 			return false;
 		}
+		else if (lotteryNo.length() != 8) {
+			showErrorMsg("請確認輸入的發票號碼共 8 碼數字");
+			return false;
+		}
 		return true;
 	}
 
