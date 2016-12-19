@@ -21,6 +21,7 @@ import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.util.ImageUtil;
 import com.exfantasy.test.vo.Consume;
 import com.exfantasy.test.vo.ResponseVo;
+import com.exfantasy.test.vo.RewardNumber;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -89,6 +90,9 @@ public class MainController implements Initializable {
 
 	@FXML
 	private Button btnClear;
+	
+	@FXML 
+	private Button btnLatestNumber;
 
 	@FXML
 	private TableView<Consume> tvConsumes;
@@ -99,7 +103,7 @@ public class MainController implements Initializable {
 	
 	private final Image gotImage = ImageUtil.createGotImage();
 	private final Image notGotImage = ImageUtil.createNotGotImage();
-    
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initComponents();
@@ -322,6 +326,8 @@ public class MainController implements Initializable {
 			makeQuery();
 		} else if (event.getSource().equals(btnClear)) {
 			makeClear();
+		} else if (event.getSource().equals(btnLatestNumber)) {
+			getLatestRewardNumbers();
 		}
 	}
 
@@ -535,6 +541,29 @@ public class MainController implements Initializable {
 		dpEndDate.setValue(null);
 		
 		showMsg("清除成功");
+	}
+	
+	private void getLatestRewardNumbers() {
+		final String url = mConfig.getHost() + ApiCnst.GET_LATEST_REWARD_NUMBERS;
+		try {
+			String respData = HttpUtil.sendGetRequest(url);
+			
+			System.out.println(respData);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			final RewardNumber[] rewardNumbers = mapper.readValue(respData, RewardNumber[].class);
+			
+			System.out.println(rewardNumbers);
+			
+		} catch (HttpUtilException e) {
+			String errorMsg = "取得最新發票開獎號碼失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} catch (IOException e) {
+			String errorMsg = "查詢成功, 但轉換為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
 	}
 	
 	private void showMsg(String msg) {

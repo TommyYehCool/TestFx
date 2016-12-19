@@ -7,4 +7,5 @@ public interface ApiCnst {
 	public static final String UPD_CONSUME = "/consume/upd_consume"; 
 	public static final String DEL_CONSUME = "/consume/del_consume";
 	public static final String QRY_CONSUME = "/consume/get_consume"; 
+	public static final String GET_LATEST_REWARD_NUMBERS = "/consume/get_latest_reward_numbers";
 }

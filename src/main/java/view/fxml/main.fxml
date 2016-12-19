@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.geometry.Insets?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/main.css" fx:controller="com.exfantasy.test.controller.MainController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.exfantasy.test.controller.MainController">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="750.0" />
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="801.0" minWidth="10.0" prefWidth="801.0" />
@@ -75,21 +76,21 @@
 				<Insets left="10.0" right="10.0" />
 			</GridPane.margin>
 		</TextField>
-		
+
 		<Label text="開始日期" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
 		<DatePicker fx:id="dpStartDate" GridPane.columnIndex="1" GridPane.rowIndex="2">
 			<GridPane.margin>
 				<Insets left="10.0" right="10.0" />
 			</GridPane.margin>
 		</DatePicker>
-      	<Label text="結束日期" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      	<DatePicker fx:id="dpEndDate" GridPane.columnIndex="3" GridPane.rowIndex="2">
+		<Label text="結束日期" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+		<DatePicker fx:id="dpEndDate" GridPane.columnIndex="3" GridPane.rowIndex="2">
 			<GridPane.margin>
 				<Insets left="10.0" right="10.0" />
 			</GridPane.margin>
 		</DatePicker>
-      	
-      	<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2">
+
+		<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2">
 			<children>
 				<Button fx:id="btnInsert" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="新增" GridPane.columnIndex="6" GridPane.rowIndex="2">
 					<GridPane.margin>
@@ -104,21 +105,27 @@
 						<Insets left="10.0" right="10.0" />
 					</GridPane.margin>
 					<HBox.margin>
-						<Insets bottom="10.0" right="10.0" top="10.0" />
+						<Insets right="10.0" top="10.0" />
 					</HBox.margin>
 				</Button>
-				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="清除" GridPane.columnIndex="8" GridPane.columnSpan="2" GridPane.rowIndex="2">
+				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="清除" GridPane.columnIndex="8" GridPane.columnSpan="2"
+					GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="10.0" right="10.0" />
 					</GridPane.margin>
+					<HBox.margin>
+						<Insets right="10.0" top="10.0" />
+					</HBox.margin>
+				</Button>
+				<Button fx:id="btnLatestNumber" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="80.0" text="最新開獎">
 					<HBox.margin>
 						<Insets top="10.0" />
 					</HBox.margin>
 				</Button>
 			</children>
-         <GridPane.margin>
-            <Insets left="30.0" />
-         </GridPane.margin>
+			<GridPane.margin>
+				<Insets left="30.0" />
+			</GridPane.margin>
 		</HBox>
 
 		<TableView fx:id="tvConsumes" prefHeight="480.0" prefWidth="1248.0" tableMenuButtonVisible="true" GridPane.columnSpan="7" GridPane.rowIndex="3">
