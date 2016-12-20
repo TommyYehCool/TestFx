@@ -1,0 +1,7 @@
+1. 到 project 目錄把 build 整個砍掉
+
+2. 點開 build.fxbuild 重新 Generate ant build.xml only
+
+3. 根據 git 調整 build.xml
+
+4. 在 build.xml 上按右鍵, Run as "Ant build"
