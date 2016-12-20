@@ -101,9 +101,9 @@ public class LatestRewardDialogController {
 	}
 	
 	private String getFirstSection(RewardNumber[] rewardNumbers) {
-		int tempSmallestYear = 0;
-		int tempSmallestFirstMonth = 0;
-		String smallestSection = null;
+		int tempLatestYear = 0;
+		int tempLatestFirstMonth = 0;
+		String latestSection = null;
 		for (RewardNumber rewardNumber : rewardNumbers) {
 			String section = rewardNumber.getSection();
 		
@@ -113,17 +113,17 @@ public class LatestRewardDialogController {
 			String[] splitByMinus = splitByUnderLine[1].split("-");
 			int firstMonth = Integer.parseInt(splitByMinus[0]);
 			
-			if (tempSmallestYear == 0 || year < tempSmallestYear) {
-				tempSmallestYear = year;
-				tempSmallestFirstMonth = firstMonth;
-				smallestSection = section;
+			if (tempLatestYear == 0 || year > tempLatestYear) {
+				tempLatestYear = year;
+				tempLatestFirstMonth = firstMonth;
+				latestSection = section;
 				continue;
 			}
-			if (firstMonth < tempSmallestFirstMonth) {
-				tempSmallestFirstMonth = firstMonth;
-				smallestSection = section;
+			if (firstMonth > tempLatestFirstMonth) {
+				tempLatestFirstMonth = firstMonth;
+				latestSection = section;
 			}
 		}
-		return smallestSection;
+		return latestSection;
 	}
 }
