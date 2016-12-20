@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.exfantasy.test.cnst.ApiCnst;
 import com.exfantasy.test.cnst.ResultCode;
+import com.exfantasy.test.cnst.UiCnst;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
 import com.exfantasy.test.enu.DataType;
@@ -33,8 +34,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -50,7 +53,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -553,7 +559,7 @@ public class MainController implements Initializable {
 			ObjectMapper mapper = new ObjectMapper();
 			final RewardNumber[] rewardNumbers = mapper.readValue(respData, RewardNumber[].class);
 			
-			System.out.println(rewardNumbers);
+			showLatestRewardDialog(rewardNumbers);
 			
 		} catch (HttpUtilException e) {
 			String errorMsg = "取得最新發票開獎號碼失敗";
@@ -566,6 +572,38 @@ public class MainController implements Initializable {
 		}
 	}
 	
+	/**
+	 * ref: http://code.makery.ch/library/javafx-8-tutorial/part3/
+	 * 
+	 * @param rewardNumbers
+	 */
+	private void showLatestRewardDialog(RewardNumber[] rewardNumbers) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/view/fxml/latest_reward.fxml"));
+			GridPane page = (GridPane) loader.load();
+			
+			Stage primaryStage = (Stage) dpConsumeDate.getScene().getWindow();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle(UiCnst.LATEST_REWARD_DLG_TITLE);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			LatestRewardDialogController controller = loader.getController();
+			controller.setRewardNumbers(rewardNumbers);
+			
+			dialogStage.showAndWait();
+		} 
+		catch (IOException e) {
+			String errorMsg = "開啟最新獎號對話框失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
+	}
+
 	private void showMsg(String msg) {
 		showMsg(false, msg);
 	}
