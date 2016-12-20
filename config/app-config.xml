@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<!-- local -->
-	<host>http://localhost:8080</host>
+<!-- 	<host>http://localhost:8080</host> -->
 	
 	<!-- Heroku -->
-<!-- 	<host>https://tommywebservice.herokuapp.com</host> -->
+	<host>https://tommywebservice.herokuapp.com</host>
 </config>
