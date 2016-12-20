@@ -9,3 +9,5 @@
 		<fx:jvmarg value="-Dfile.encoding=UTF8"/>
 		<fx:jvmarg value="-Dlogback.configurationFile=./config/logback.xml"/>
 	</fx:platform>
+	
+3. 安裝後會在 C:\Users\tommy.feng\AppData\Local\ConsumeRecorder
