@@ -613,8 +613,6 @@ public class MainController implements Initializable {
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
 			
-			System.out.println(respData);
-			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			TyphoonVacationInfo[] typhoonVacationInfos = mapper.readValue(respData, TyphoonVacationInfo[].class);
