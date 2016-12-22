@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.exfantasy.test.controller.TyphoonVacationInfosDialogController">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -15,6 +15,11 @@
 	</rowConstraints>
 	<children>
 		<TableView fx:id="tvTyphoonVacationInfos" prefHeight="200.0" prefWidth="200.0">
+			<columns>
+				<TableColumn prefWidth="110.0" text="地區" />
+				<TableColumn prefWidth="113.0" text="縣市" />
+				<TableColumn prefWidth="376.0" text="消息" />
+			</columns>
 		</TableView>
 	</children>
 </GridPane>

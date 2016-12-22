@@ -25,6 +25,7 @@ import com.exfantasy.test.vo.ResponseVo;
 import com.exfantasy.test.vo.RewardNumber;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
+import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -616,21 +617,23 @@ public class MainController implements Initializable {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
-			showTyphoonVacationInfosDialog();
+			TyphoonVacationInfo[] typhoonVacationInfos = mapper.readValue(respData, TyphoonVacationInfo[].class);
+			
+			showTyphoonVacationInfosDialog(typhoonVacationInfos);
 
 		} catch (HttpUtilException e) {
 			String errorMsg = "取得最新颱風假資訊失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		} 
-//		catch (IOException e) {
-//			String errorMsg = "查詢成功, 但轉換為物件失敗";
-//			logger.error(errorMsg, e);
-//			showErrorMsg(errorMsg);
-//		}
+		catch (IOException e) {
+			String errorMsg = "查詢成功, 但轉換為物件失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
 	}
 
-	private void showTyphoonVacationInfosDialog() {
+	private void showTyphoonVacationInfosDialog(TyphoonVacationInfo[] typhoonVacationInfos) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/fxml/typhoon_vacation_info.fxml"));
@@ -646,6 +649,8 @@ public class MainController implements Initializable {
 			dialogStage.setScene(scene);
 			
 			TyphoonVacationInfosDialogController controller = loader.getController();
+			
+			controller.setTyphoonVacationInfos(typhoonVacationInfos);
 			
 			dialogStage.showAndWait();
 		} 
