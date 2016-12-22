@@ -1,7 +1,7 @@
 package com.exfantasy.test.vo;
 
 import com.exfantasy.test.json.deserializer.RewardNumberDeserializer;
-import com.exfantasy.utils.tools.RewardType;
+import com.exfantasy.utils.tools.receipt_lottery.RewardType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(using = RewardNumberDeserializer.class)

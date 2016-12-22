@@ -1,6 +1,6 @@
 package com.exfantasy.test.enu;
 
-public enum TableColDef {
+public enum ConsumeTableColDef {
 	GOT(0, DataType.Boolean, "got", false), 
 	PRIZE(1, DataType.Integr, "prize", false), 
 	LOTTERY_NO(2, DataType.String, "lotteryNo", false), 
@@ -14,7 +14,7 @@ public enum TableColDef {
 	private String mappingVoField;
 	private boolean isEditable;
 
-	private TableColDef(int tableColIndex, DataType dataType, String mappingVoField, boolean isEditable) {
+	private ConsumeTableColDef(int tableColIndex, DataType dataType, String mappingVoField, boolean isEditable) {
 		this.tableColIndex = tableColIndex;
 		this.dataType = dataType;
 		this.mappingVoField = mappingVoField;
@@ -37,8 +37,8 @@ public enum TableColDef {
 		return this.isEditable;
 	}
 
-	public static TableColDef convertByTableIndex(int tableColIndex) {
-		for (TableColDef col : TableColDef.values()) {
+	public static ConsumeTableColDef convertByTableIndex(int tableColIndex) {
+		for (ConsumeTableColDef col : ConsumeTableColDef.values()) {
 			if (col.getTableColIndex() == tableColIndex) {
 				return col;
 			}

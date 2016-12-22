@@ -55,11 +55,6 @@
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.github.TommyYehCool\MyUtils\1.0.23\1a720956f32620fd6a79092fe62922cf345cd949">
-				<filename name="MyUtils-1.0.23.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
 			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\org.jsoup\jsoup\1.10.1\645f1ad2f6f4cbad1cde4c483eae71e4051be6ef">
 				<filename name="jsoup-1.10.1.jar"/>
 			</fileset>
@@ -67,6 +62,11 @@
 		<copy todir="externalLibs">
 			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.aquafx-project\aquafx\0.1\c5d7fba9fbf0083a963dfd6abebfee26b87793bf">
 				<filename name="aquafx-0.1.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="D:\gradle-2.14.1\caches\modules-2\files-2.1\com.github.TommyYehCool\MyUtils\1.0.25\eeee6070264f668a96cacd12b16b122035767b37">
+				<filename name="MyUtils-1.0.25.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
@@ -98,12 +98,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="D:\TommyWs\TestFx">
-				<include name="src\test\java/**" />
+				<include name="src\main\java/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="D:\TommyWs\TestFx">
-				<include name="src\main\java/**" />
+				<include name="src\test\java/**" />
 			</fileset>
 		</copy>
 	
@@ -129,9 +129,9 @@
 				<include name="logback-core-1.1.5.jar"/>
 				<include name="aquafx-0.1.jar"/>
 				<include name="commons-codec-1.9.jar"/>
+				<include name="MyUtils-1.0.25.jar"/>
 				<include name="jackson-annotations-2.8.0.jar"/>
 				<include name="httpcore-4.4.4.jar"/>
-				<include name="MyUtils-1.0.23.jar"/>
 				<include name="junit-4.12.jar"/>
 			</fileset>
 		</copy>

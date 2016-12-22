@@ -16,11 +16,11 @@ import com.exfantasy.test.cnst.ResultCode;
 import com.exfantasy.test.cnst.UiCnst;
 import com.exfantasy.test.config.Config;
 import com.exfantasy.test.config.ConfigHolder;
+import com.exfantasy.test.enu.ConsumeTableColDef;
 import com.exfantasy.test.enu.DataType;
-import com.exfantasy.test.enu.TableColDef;
 import com.exfantasy.test.enu.Type;
 import com.exfantasy.test.util.ImageUtil;
-import com.exfantasy.test.vo.Consume;
+import com.exfantasy.test.vo.ConsumeTableModel;
 import com.exfantasy.test.vo.ResponseVo;
 import com.exfantasy.test.vo.RewardNumber;
 import com.exfantasy.utils.http.HttpUtil;
@@ -100,9 +100,12 @@ public class MainController implements Initializable {
 	@FXML 
 	private Button btnLatestNumber;
 
+	@FXML 
+	private Button btnTyphoonVacation;
+
 	@FXML
-	private TableView<Consume> tvConsumes;
-	private ObservableList<Consume> mConsumes;
+	private TableView<ConsumeTableModel> tvConsumes;
+	private ObservableList<ConsumeTableModel> mConsumes;
 
 	@FXML
 	private Label lblProcessResult;
@@ -165,34 +168,21 @@ public class MainController implements Initializable {
 	private void initTable() {
 		mConsumes = FXCollections.observableArrayList();
 		
-		defineTableColumnCellFactory();
+		defineConsumeTableColumnCellFactory();
 		
-		defineTableContextMenu();
+		defineConsumeTableContextMenu();
 		
 		tvConsumes.setItems(mConsumes);
 	}
 	
-	private void defineTableContextMenu() {
-		// 參考: http://stackoverflow.com/questions/20802208/delete-a-row-from-a-javafx-table-using-context-menu
-		MenuItem menuDel = new MenuItem("刪除");
-		menuDel.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent t) {
-		    	Consume selectedConsume = tvConsumes.getSelectionModel().getSelectedItem();
-		    	makeDelete(selectedConsume);
-		    }
-		});
-		tvConsumes.setContextMenu(new ContextMenu(menuDel));
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void defineTableColumnCellFactory() {
+	private void defineConsumeTableColumnCellFactory() {
 		tvConsumes.setEditable(true);
 		
-		ObservableList<TableColumn<Consume, ?>> columns = tvConsumes.getColumns();
+		ObservableList<TableColumn<ConsumeTableModel, ?>> columns = tvConsumes.getColumns();
 		
 		for (int tableColIndex = 0; tableColIndex < columns.size(); tableColIndex++) {
-			TableColDef tableColDef = TableColDef.convertByTableIndex(tableColIndex);
+			ConsumeTableColDef tableColDef = ConsumeTableColDef.convertByTableIndex(tableColIndex);
 			
 			PropertyValueFactory propValFactory = null;
 			
@@ -201,23 +191,23 @@ public class MainController implements Initializable {
 			
 			switch (dataType) {
 				case LocalDate:
-					propValFactory = new PropertyValueFactory<Consume, LocalDate>(mappingVoField);
+					propValFactory = new PropertyValueFactory<ConsumeTableModel, LocalDate>(mappingVoField);
 					break;
 
 				case Type:
-					propValFactory = new PropertyValueFactory<Consume, Type>(mappingVoField);
+					propValFactory = new PropertyValueFactory<ConsumeTableModel, Type>(mappingVoField);
 					break;
 
 				case String:
-					propValFactory = new PropertyValueFactory<Consume, String>(mappingVoField);
+					propValFactory = new PropertyValueFactory<ConsumeTableModel, String>(mappingVoField);
 					break;
 
 				case Integr:
-					propValFactory = new PropertyValueFactory<Consume, Integer>(mappingVoField);
+					propValFactory = new PropertyValueFactory<ConsumeTableModel, Integer>(mappingVoField);
 					break;
 				
 				case Boolean:
-					propValFactory = new PropertyValueFactory<Consume, Boolean>(mappingVoField);
+					propValFactory = new PropertyValueFactory<ConsumeTableModel, Boolean>(mappingVoField);
 					break;
 			}
 			
@@ -236,9 +226,9 @@ public class MainController implements Initializable {
 					converter = new IntegerStringConverter();
 				}
 				column.setCellFactory(TextFieldTableCell.forTableColumn(converter));
-				column.setOnEditCommit(new EventHandler<CellEditEvent<Consume, ?>>() {
+				column.setOnEditCommit(new EventHandler<CellEditEvent<ConsumeTableModel, ?>>() {
 					@Override
-					public void handle(CellEditEvent<Consume, ?> event) {
+					public void handle(CellEditEvent<ConsumeTableModel, ?> event) {
 						processCellEdit(tableColDef, event);
 					}
 				});
@@ -246,8 +236,8 @@ public class MainController implements Initializable {
 			
 			// 是否中獎欄位, 判斷是否中獎塞入圖式
 			// 參考: http://stackoverflow.com/questions/34896299/javafx-change-tablecell-column-of-selected-tablerow-in-a-tableview
-			if (tableColDef == TableColDef.GOT) {
-				column.setCellFactory(col -> new TableCell<Consume, Integer>() {
+			if (tableColDef == ConsumeTableColDef.GOT) {
+				column.setCellFactory(col -> new TableCell<ConsumeTableModel, Integer>() {
 					private final ImageView imageView = new ImageView();
 					
 					@Override
@@ -275,8 +265,8 @@ public class MainController implements Initializable {
 			}
 			// 獎金欄位, 若為 0 不顯示
 			// http://code.makery.ch/blog/javafx-8-tableview-cell-renderer/
-			else if (tableColDef == TableColDef.PRIZE) {
-				column.setCellFactory(col -> new TableCell<Consume, Integer>() {
+			else if (tableColDef == ConsumeTableColDef.PRIZE) {
+				column.setCellFactory(col -> new TableCell<ConsumeTableModel, Integer>() {
 					@Override
 					protected void updateItem(Integer prize, boolean empty) {
 						super.updateItem(prize, empty);
@@ -299,8 +289,8 @@ public class MainController implements Initializable {
 		}
 	}
 	
-	protected void processCellEdit(TableColDef tableColDef, CellEditEvent<Consume, ?> event) {
-		Consume consume = (Consume) event.getTableView().getItems().get(event.getTablePosition().getRow());
+	protected void processCellEdit(ConsumeTableColDef tableColDef, CellEditEvent<ConsumeTableModel, ?> event) {
+		ConsumeTableModel consume = (ConsumeTableModel) event.getTableView().getItems().get(event.getTablePosition().getRow());
 		switch (tableColDef) {
 			case AMOUNT:
 				int newAmount = (Integer) event.getNewValue();
@@ -322,6 +312,19 @@ public class MainController implements Initializable {
 		}).start();
 	}
 
+	private void defineConsumeTableContextMenu() {
+		// 參考: http://stackoverflow.com/questions/20802208/delete-a-row-from-a-javafx-table-using-context-menu
+		MenuItem menuDel = new MenuItem("刪除");
+		menuDel.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent t) {
+		    	ConsumeTableModel selectedConsume = tvConsumes.getSelectionModel().getSelectedItem();
+		    	makeDelete(selectedConsume);
+		    }
+		});
+		tvConsumes.setContextMenu(new ContextMenu(menuDel));
+	}
+
 	@FXML
 	public void handleButtonsAction(ActionEvent event) {
 		if (event.getSource().equals(btnInsert)) {
@@ -334,6 +337,8 @@ public class MainController implements Initializable {
 			makeClear();
 		} else if (event.getSource().equals(btnLatestNumber)) {
 			getLatestRewardNumbers();
+		} else if (event.getSource().equals(btnTyphoonVacation)) {
+			getTyphoonVacation();
 		}
 	}
 
@@ -383,7 +388,7 @@ public class MainController implements Initializable {
 		Integer amount = Integer.parseInt(tfdAmount.getText());
 		String lotteryNo = tfdLotteryNo.getText();
 		
-		Consume consume = new Consume();
+		ConsumeTableModel consume = new ConsumeTableModel();
 		consume.setConsumeDate(consumeDate);
 		consume.setType(type);
 		consume.setProdName(prodName);
@@ -424,7 +429,7 @@ public class MainController implements Initializable {
 		}
 	}
 
-	private void makeUpdate(Consume consume) {
+	private void makeUpdate(ConsumeTableModel consume) {
 		try {
 			final String url = mConfig.getHost() + ApiCnst.UPD_CONSUME;
 			
@@ -446,7 +451,7 @@ public class MainController implements Initializable {
 		}
 	}
 
-	private void makeDelete(Consume consumeToDelete) {
+	private void makeDelete(ConsumeTableModel consumeToDelete) {
 		try {
 			final String url = mConfig.getHost() + ApiCnst.DEL_CONSUME;
 			
@@ -504,7 +509,7 @@ public class MainController implements Initializable {
 				String respData = HttpUtil.sendGetRequest(url);
 				
 				ObjectMapper mapper = new ObjectMapper();
-				final Consume[] consumes = mapper.readValue(respData, Consume[].class);
+				final ConsumeTableModel[] consumes = mapper.readValue(respData, ConsumeTableModel[].class);
 
 				mConsumes.clear();
 				mConsumes.addAll(Arrays.asList(consumes));
@@ -528,9 +533,9 @@ public class MainController implements Initializable {
 		}).start();
 	}
 
-	private int getTotalSpent(Consume[] consumes) {
+	private int getTotalSpent(ConsumeTableModel[] consumes) {
 		int totalSpent = 0;
-		for (Consume consume : consumes) {
+		for (ConsumeTableModel consume : consumes) {
 			totalSpent += consume.getAmount();
 		}
 		return totalSpent;
@@ -553,8 +558,6 @@ public class MainController implements Initializable {
 		final String url = mConfig.getHost() + ApiCnst.GET_LATEST_REWARD_NUMBERS;
 		try {
 			String respData = HttpUtil.sendGetRequest(url);
-			
-			System.out.println(respData);
 			
 			ObjectMapper mapper = new ObjectMapper();
 			final RewardNumber[] rewardNumbers = mapper.readValue(respData, RewardNumber[].class);
@@ -599,6 +602,55 @@ public class MainController implements Initializable {
 		} 
 		catch (IOException e) {
 			String errorMsg = "開啟最新獎號對話框失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		}
+	}
+	
+	private void getTyphoonVacation() {
+		final String url = mConfig.getHost() + ApiCnst.GET_TYPHOON_VACATION;
+		try {
+			String respData = HttpUtil.sendGetRequest(url);
+			
+			System.out.println(respData);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			showTyphoonVacationInfosDialog();
+
+		} catch (HttpUtilException e) {
+			String errorMsg = "取得最新颱風假資訊失敗";
+			logger.error(errorMsg, e);
+			showErrorMsg(errorMsg);
+		} 
+//		catch (IOException e) {
+//			String errorMsg = "查詢成功, 但轉換為物件失敗";
+//			logger.error(errorMsg, e);
+//			showErrorMsg(errorMsg);
+//		}
+	}
+
+	private void showTyphoonVacationInfosDialog() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/view/fxml/typhoon_vacation_info.fxml"));
+			GridPane page = (GridPane) loader.load();
+			
+			Stage primaryStage = (Stage) dpConsumeDate.getScene().getWindow();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle(UiCnst.LATEST_REWARD_DLG_TITLE);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			TyphoonVacationInfosDialogController controller = loader.getController();
+			
+			dialogStage.showAndWait();
+		} 
+		catch (IOException e) {
+			String errorMsg = "開啟最新颱風消息對話框失敗";
 			logger.error(errorMsg, e);
 			showErrorMsg(errorMsg);
 		}

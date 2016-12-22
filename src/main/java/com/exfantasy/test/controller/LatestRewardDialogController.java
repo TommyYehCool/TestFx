@@ -1,7 +1,7 @@
 package com.exfantasy.test.controller;
 
 import com.exfantasy.test.vo.RewardNumber;
-import com.exfantasy.utils.tools.RewardType;
+import com.exfantasy.utils.tools.receipt_lottery.RewardType;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -23,7 +23,7 @@ import javafx.beans.property.StringProperty;
  *
  */
 @JsonDeserialize(using = ConsumeDeserializer.class)
-public class Consume {
+public class ConsumeTableModel {
 	private ObjectProperty<LocalDate> consumeDate = new SimpleObjectProperty<>();
 	private ObjectProperty<Type> type = new SimpleObjectProperty<>();
 	private StringProperty prodName = new SimpleStringProperty();
