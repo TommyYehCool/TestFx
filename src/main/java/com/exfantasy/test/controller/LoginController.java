@@ -45,7 +45,7 @@ public class LoginController implements Initializable {
 	private Config mConfig;
 
 	@FXML
-	private TextField txtUsername;
+	private TextField txtEmail;
 	@FXML
 	private PasswordField txtPassword;
 	@FXML
@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
 	@FXML
 	private Text lblUserLogin;
 	@FXML
-	private Text lblUsername;
+	private Text lblEmail;
 	@FXML
 	private Text lblPassword;
 	@FXML
@@ -77,8 +77,8 @@ public class LoginController implements Initializable {
 			new FadeInRightTransition(lblUserLogin).play();
 			new FadeInLeftTransition(lblWelcome).play();
 			new FadeInLeftTransition1(lblPassword).play();
-			new FadeInLeftTransition1(lblUsername).play();
-			new FadeInLeftTransition1(txtUsername).play();
+			new FadeInLeftTransition1(lblEmail).play();
+			new FadeInLeftTransition1(txtEmail).play();
 			new FadeInLeftTransition1(txtPassword).play();
 			new FadeInRightTransition(btnLogin).play();
 			lblClose.setOnMouseClicked((MouseEvent event) -> {
@@ -94,7 +94,7 @@ public class LoginController implements Initializable {
 
 	@FXML
 	private void doLogin(ActionEvent event) {
-		String username = txtUsername.getText();
+		String email = txtEmail.getText();
 		String password = txtPassword.getText();
 
 		Service<Boolean> service = new Service<Boolean>() {
@@ -105,7 +105,7 @@ public class LoginController implements Initializable {
 					protected Boolean call() throws Exception {
 						String url = mConfig.getHost() + ApiCnst.LOGIN;
 						List<NameValuePair> params = new ArrayList<>();
-						params.add(new BasicNameValuePair("username", username));
+						params.add(new BasicNameValuePair("email", email));
 						params.add(new BasicNameValuePair("password", password));
 						HttpUtil.sendPostRequest(url, params);
 						return true;
