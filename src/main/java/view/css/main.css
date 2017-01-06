@@ -89,8 +89,13 @@
     -fx-opacity: 1;
 }
 
+/* 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
+    -fx-background-color: brown;
+}
+*/
+.table-view:focused .table-row-cell:filled:selected {
+    -fx-background-color: brown;
 }
 
 .table-view:empty {

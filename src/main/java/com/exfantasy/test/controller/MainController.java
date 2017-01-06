@@ -45,6 +45,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -172,6 +173,8 @@ public class MainController implements Initializable {
 		defineConsumeTableColumnCellFactory();
 		
 		defineConsumeTableContextMenu();
+		
+		tvConsumes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		tvConsumes.setItems(mConsumes);
 	}
@@ -319,8 +322,8 @@ public class MainController implements Initializable {
 		menuDel.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent t) {
-		    	ConsumeTableModel selectedConsume = tvConsumes.getSelectionModel().getSelectedItem();
-		    	makeDelete(selectedConsume);
+		    	ObservableList<ConsumeTableModel> selectedConsumes = tvConsumes.getSelectionModel().getSelectedItems();
+		    	makeDelete(selectedConsumes);
 		    }
 		});
 		tvConsumes.setContextMenu(new ContextMenu(menuDel));
@@ -452,16 +455,18 @@ public class MainController implements Initializable {
 		}
 	}
 
-	private void makeDelete(ConsumeTableModel consumeToDelete) {
+	private void makeDelete(ObservableList<ConsumeTableModel> consumesToDelete) {
 		try {
 			final String url = mConfig.getHost() + ApiCnst.DEL_CONSUME;
 			
 			ObjectMapper mapper = new ObjectMapper();
-			String jsonData = mapper.writeValueAsString(consumeToDelete);
+			String jsonData = mapper.writeValueAsString(consumesToDelete);
 			
 			HttpUtil.sendPostRequest(url, jsonData);
 	
-			mConsumes.remove(consumeToDelete);
+			for (ConsumeTableModel consumeToDelete : consumesToDelete) {
+				mConsumes.remove(consumeToDelete);
+			}
 			
 			showMsg("刪除成功");
 			
