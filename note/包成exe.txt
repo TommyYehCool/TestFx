@@ -1,4 +1,5 @@
-1. http://code.makery.ch/library/javafx-8-tutorial/part7/
+1. 參考: 
+	http://code.makery.ch/library/javafx-8-tutorial/part7/
 
 2. JVM 設定方式 
 	https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html
@@ -10,4 +11,6 @@
 		<fx:jvmarg value="-Dlogback.configurationFile=./config/logback.xml"/>
 	</fx:platform>
 	
-3. 安裝後會在 C:\Users\tommy.feng\AppData\Local\ConsumeRecorder
+3. Run 完 ant build.xml 後, 產生的 exe 檔存在於 {project}\build\deploy\bundles
+	
+4. 安裝後會在 C:\Users\tommy.feng\AppData\Local\ConsumeRecorder
