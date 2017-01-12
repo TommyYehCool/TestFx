@@ -4,12 +4,13 @@
 2. JVM 設定方式 
 	https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html
 	
-	<!-- Custom JVM setup for application -->
-	<!-- 增加 VM arguments -->
-	<fx:platform basedir="${java.home}">
-		<fx:jvmarg value="-Dfile.encoding=UTF8"/>
-		<fx:jvmarg value="-Dlogback.configurationFile=./config/logback.xml"/>
-	</fx:platform>
+	將下列設定放到產生出來的 build.xml 裡:
+		<!-- Custom JVM setup for application -->
+		<!-- 增加 VM arguments -->
+		<fx:platform basedir="${java.home}">
+			<fx:jvmarg value="-Dfile.encoding=UTF8"/>
+			<fx:jvmarg value="-Dlogback.configurationFile=./config/logback.xml"/>
+		</fx:platform>
 	
 3. Run 完 ant build.xml 後, 產生的 exe 檔存在於 {project}\build\deploy\bundles
 	

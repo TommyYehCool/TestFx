@@ -2,6 +2,6 @@
 
 2. 點開 build.fxbuild 重新 Generate ant build.xml only
 
-3. 根據 git 調整 build.xml
+3. 根據 git 調整 build.xml, 通常確認只修改 MyUtils 版本
 
 4. 在 build.xml 上按右鍵, Run as "Ant build"
