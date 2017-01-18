@@ -23,7 +23,7 @@ public class StageChangeUtil {
 		alert.showAndWait();
 	}
 
-	public void changeStage(Stage stage, Label labelToGetCurrentStage, String fxmlToLoad, String title, boolean resize, StageStyle style, boolean maximized) {
+	public void changeStage(Label labelToGetCurrentStage, String fxmlToLoad, String title, boolean resize, StageStyle style, boolean maximized) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(fxmlToLoad));
@@ -45,7 +45,7 @@ public class StageChangeUtil {
 			}
 			st.show();
 
-			stage = (Stage) labelToGetCurrentStage.getScene().getWindow();
+			Stage stage = (Stage) labelToGetCurrentStage.getScene().getWindow();
 			stage.close();
 		} catch (Exception e) {
 			logger.error("Change stage got exception, msg: <{}>", e.getMessage(), e);

@@ -36,7 +36,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
@@ -64,8 +63,6 @@ public class LoginController implements Initializable {
 	private Label lblClose;
 	@FXML
 	private ImageView imgLoading;
-
-	private Stage stage;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -119,7 +116,7 @@ public class LoginController implements Initializable {
 		});
 		service.setOnSucceeded((WorkerStateEvent wst) -> {
 			StageChangeUtil util = new StageChangeUtil();
-			util.changeStage(stage, lblClose, "/view/fxml/main.fxml", UiCnst.UI_TITLE, true, StageStyle.DECORATED, false);
+			util.changeStage(lblClose, "/view/fxml/main.fxml", UiCnst.UI_TITLE, true, StageStyle.DECORATED, false);
 		});
 		service.setOnFailed((WorkerStateEvent wst) -> {
 			String errorMsg = "";

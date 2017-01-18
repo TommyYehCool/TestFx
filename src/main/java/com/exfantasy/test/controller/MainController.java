@@ -133,14 +133,22 @@ public class MainController {
 	}
 	
 	private void addHotKey() {
+		// ref: https://dzone.com/articles/handling-keyboard-sortcuts
 		Scene scene = stage.getScene();
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-		    final KeyCombination keyComb = new KeyCodeCombination(KeyCode.ESCAPE,
-		                                                          KeyCombination.CONTROL_DOWN);
+			final KeyCombination ctrlI = new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN);
+		    final KeyCombination ctrlQ = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
+		    final KeyCombination ctrlC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
 		    public void handle(KeyEvent ke) {
-		        if (keyComb.match(ke)) {
-		            System.out.println("Key Pressed: " + keyComb);
+		    	if (ctrlI.match(ke)) {
+		    		btnInsert.fire();
+		    	}
+		    	else if (ctrlQ.match(ke)) {
+		        	btnQuery.fire();
 		        }
+		    	else if (ctrlC.match(ke)) {
+		    		btnClear.fire();
+		    	}
 		    }
 		});
 	}

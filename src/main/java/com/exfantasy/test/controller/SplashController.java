@@ -20,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class SplashController implements Initializable {
@@ -35,8 +34,6 @@ public class SplashController implements Initializable {
     @FXML
     private ImageView imgLoading;
     
-    private Stage stage;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         longStart();
@@ -67,7 +64,7 @@ public class SplashController implements Initializable {
         });
         service.setOnSucceeded((WorkerStateEvent event) -> {
             StageChangeUtil util = new StageChangeUtil();
-            util.changeStage(stage, lblClose, "/view/fxml/login.fxml", UiCnst.UI_TITLE, true, StageStyle.UNDECORATED, false);
+            util.changeStage(lblClose, "/view/fxml/login.fxml", UiCnst.UI_TITLE, true, StageStyle.UNDECORATED, false);
         });
     } 
 }
