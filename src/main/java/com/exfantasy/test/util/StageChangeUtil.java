@@ -3,6 +3,8 @@ package com.exfantasy.test.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.exfantasy.test.controller.MainController;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,16 +25,27 @@ public class StageChangeUtil {
 
 	public void changeStage(Stage stage, Label labelToGetCurrentStage, String fxmlToLoad, String title, boolean resize, StageStyle style, boolean maximized) {
 		try {
-			Stage st = new Stage();
-			stage = (Stage) labelToGetCurrentStage.getScene().getWindow();
-			Parent root = FXMLLoader.load(getClass().getResource(fxmlToLoad));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource(fxmlToLoad));
+			
+			Parent root = loader.load();
+			
 			Scene scene = new Scene(root);
+
+			Stage st = new Stage();
 			st.initStyle(style);
 			st.setResizable(resize);
 			st.setMaximized(maximized);
 			st.setTitle(title);
 			st.setScene(scene);
+			if (fxmlToLoad.equals("/view/fxml/main.fxml")) {
+				MainController controller = loader.getController();
+				controller.setStage(st);
+				controller.init();
+			}
 			st.show();
+
+			stage = (Stage) labelToGetCurrentStage.getScene().getWindow();
 			stage.close();
 		} catch (Exception e) {
 			logger.error("Change stage got exception, msg: <{}>", e.getMessage(), e);

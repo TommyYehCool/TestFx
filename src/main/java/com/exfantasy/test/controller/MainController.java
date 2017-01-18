@@ -1,11 +1,9 @@
 package com.exfantasy.test.controller;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
@@ -36,7 +34,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -55,6 +52,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -63,7 +64,7 @@ import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-public class MainController implements Initializable {
+public class MainController {
 	private Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	private Config mConfig;
@@ -115,15 +116,35 @@ public class MainController implements Initializable {
 	private final Image gotImage = ImageUtil.createGotImage();
 	private final Image notGotImage = ImageUtil.createNotGotImage();
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	private Stage stage;
+	
+	@FXML
+	public void initialize() {
+	}
+
+	public void init() {
 		initComponents();
 
 		setAquaFxStyle();
 		
 		loadConfig();
+		
+		addHotKey();
 	}
 	
+	private void addHotKey() {
+		Scene scene = stage.getScene();
+		scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		    final KeyCombination keyComb = new KeyCodeCombination(KeyCode.ESCAPE,
+		                                                          KeyCombination.CONTROL_DOWN);
+		    public void handle(KeyEvent ke) {
+		        if (keyComb.match(ke)) {
+		            System.out.println("Key Pressed: " + keyComb);
+		        }
+		    }
+		});
+	}
+
 	private void setAquaFxStyle() {
 		// FIXME 因為導入 AquaFx DatePicker 會壞掉, 所以先不用
 	}
@@ -683,5 +704,9 @@ public class MainController implements Initializable {
 				lblProcessResult.setTextFill(isError ? Color.RED : Color.BLACK);
 			});
 		}
+	}
+
+	public void setStage(Stage st) {
+		this.stage = st;
 	}
 }

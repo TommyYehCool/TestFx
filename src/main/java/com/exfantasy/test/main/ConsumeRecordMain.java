@@ -11,7 +11,10 @@ public class ConsumeRecordMain extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/fxml/splash.fxml"));
+    	// http://stackoverflow.com/questions/19602727/how-to-reference-javafx-fxml-files-in-resource-folder
+    	FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(getClass().getResource("/view/fxml/splash.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
