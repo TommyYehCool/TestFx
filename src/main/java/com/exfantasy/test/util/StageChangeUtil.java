@@ -3,6 +3,7 @@ package com.exfantasy.test.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.exfantasy.test.controller.LoginController;
 import com.exfantasy.test.controller.MainController;
 
 import javafx.fxml.FXMLLoader;
@@ -38,7 +39,12 @@ public class StageChangeUtil {
 			st.setMaximized(maximized);
 			st.setTitle(title);
 			st.setScene(scene);
-			if (fxmlToLoad.equals("/view/fxml/main.fxml")) {
+			if (fxmlToLoad.equals("/view/fxml/login.fxml")) {
+				LoginController controller = loader.getController();
+				controller.setStage(st);
+				controller.init();
+			}
+			else if (fxmlToLoad.equals("/view/fxml/main.fxml")) {
 				MainController controller = loader.getController();
 				controller.setStage(st);
 				controller.init();

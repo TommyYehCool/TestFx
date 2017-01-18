@@ -50,7 +50,7 @@ public class SplashController implements Initializable {
                 return new Task<Boolean>() {           
                     @Override
                     protected Boolean call() throws Exception {
-                    	Thread.sleep(2000);
+                    	Thread.sleep(1200);
                     	return true;
                     }
                 };

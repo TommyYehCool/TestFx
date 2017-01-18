@@ -26,16 +26,21 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
@@ -63,6 +68,8 @@ public class LoginController implements Initializable {
 	private Label lblClose;
 	@FXML
 	private ImageView imgLoading;
+	
+	private Stage stage;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -84,6 +91,21 @@ public class LoginController implements Initializable {
 			});
 		});
 	}
+	
+	public void init() {
+		addHotKey();
+	}
+
+	private void addHotKey() {
+		Scene scene = stage.getScene();
+		scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		    public void handle(KeyEvent ke) {
+		    	if (ke.getCode().equals(KeyCode.ENTER)) {
+		    		btnLogin.fire();
+		    	}
+		    }
+		});
+	}
 
 	private void loadConfig() {
 		mConfig = ConfigHolder.getInstance().getConfig();
@@ -93,6 +115,9 @@ public class LoginController implements Initializable {
 	private void doLogin(ActionEvent event) {
 		String email = txtEmail.getText();
 		String password = txtPassword.getText();
+		if (email.isEmpty() || password.isEmpty()) {
+			return;
+		}
 
 		Service<Boolean> service = new Service<Boolean>() {
 			@Override
@@ -136,5 +161,9 @@ public class LoginController implements Initializable {
 			}
 			StageChangeUtil.dialog(Alert.AlertType.ERROR, "登入失敗\n" + errorMsg);
 		});
+	}
+	
+	public void setStage(Stage st) {
+		this.stage = st;
 	}
 }
