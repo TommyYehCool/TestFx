@@ -102,8 +102,8 @@ public class LoginController implements Initializable {
 		    public void handle(KeyEvent ke) {
 		    	if (ke.getCode().equals(KeyCode.ENTER)) {
 		    		btnLogin.fire();
+		    		ke.consume();
 		    	}
-		    	ke.consume();
 		    }
 		});
 	}

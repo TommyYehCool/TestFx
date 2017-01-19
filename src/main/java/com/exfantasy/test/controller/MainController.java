@@ -142,14 +142,16 @@ public class MainController {
 		    public void handle(KeyEvent ke) {
 		    	if (ctrlI.match(ke)) {
 		    		btnInsert.fire();
+		    		ke.consume();
 		    	}
 		    	else if (ctrlQ.match(ke)) {
 		        	btnQuery.fire();
+		        	ke.consume();
 		        }
 		    	else if (ctrlC.match(ke)) {
 		    		btnClear.fire();
+		    		ke.consume();
 		    	}
-		    	ke.consume();
 		    }
 		});
 	}
