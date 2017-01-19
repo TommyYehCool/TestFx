@@ -149,6 +149,7 @@ public class MainController {
 		    	else if (ctrlC.match(ke)) {
 		    		btnClear.fire();
 		    	}
+		    	ke.consume();
 		    }
 		});
 	}
