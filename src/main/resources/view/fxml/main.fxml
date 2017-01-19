@@ -91,7 +91,7 @@
 
 		<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="1">
 			<children>
-				<Button fx:id="btnInsert" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="90.0" text="新增 (Ctrl+I)" GridPane.columnIndex="6" GridPane.rowIndex="2">
+				<Button fx:id="btnInsert" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="92.0" text="新增 (Alt+I)" GridPane.columnIndex="6" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="10.0" right="10.0" />
 					</GridPane.margin>
@@ -99,7 +99,7 @@
 						<Insets bottom="10.0" right="10.0" top="10.0" />
 					</HBox.margin>
 				</Button>
-				<Button fx:id="btnQuery" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="90.0" text="查詢 (Ctrl+Q)" GridPane.columnIndex="7" GridPane.rowIndex="2">
+				<Button fx:id="btnQuery" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="92.0" text="查詢 (Alt+Q)" GridPane.columnIndex="7" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="10.0" right="10.0" />
 					</GridPane.margin>
@@ -107,7 +107,7 @@
 						<Insets right="10.0" top="10.0" />
 					</HBox.margin>
 				</Button>
-				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="90.0" text="清除 (Ctrl+C)" GridPane.columnIndex="8" GridPane.columnSpan="2" GridPane.rowIndex="2">
+				<Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="92.0" text="清除 (Alt+C)" GridPane.columnIndex="8" GridPane.columnSpan="2" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="10.0" right="10.0" />
 					</GridPane.margin>
@@ -123,12 +123,12 @@
 		
 		<HBox prefHeight="30.0" prefWidth="233.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2">
 			<children>
-				<Button fx:id="btnLatestNumber" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="90.0" text="最新開獎">
+				<Button fx:id="btnLatestNumber" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="92.0" text="最新開獎">
 					<HBox.margin>
 						<Insets right="10.0" top="10.0" />
 					</HBox.margin>
 				</Button>
-				<Button fx:id="btnTyphoonVacation" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="90.0" text="颱風假資訊">
+				<Button fx:id="btnTyphoonVacation" mnemonicParsing="false" onAction="#handleButtonsAction" prefHeight="23.0" prefWidth="92.0" text="颱風假資訊">
 					<HBox.margin>
 						<Insets right="10.0" top="10.0" />
 					</HBox.margin>

@@ -136,9 +136,9 @@ public class MainController {
 		// ref: https://dzone.com/articles/handling-keyboard-sortcuts
 		Scene scene = stage.getScene();
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			final KeyCombination ctrlI = new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN);
-		    final KeyCombination ctrlQ = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
-		    final KeyCombination ctrlC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
+			final KeyCombination ctrlI = new KeyCodeCombination(KeyCode.I, KeyCombination.ALT_DOWN);
+		    final KeyCombination ctrlQ = new KeyCodeCombination(KeyCode.Q, KeyCombination.ALT_DOWN);
+		    final KeyCombination ctrlC = new KeyCodeCombination(KeyCode.C, KeyCombination.ALT_DOWN);
 		    public void handle(KeyEvent ke) {
 		    	if (ctrlI.match(ke)) {
 		    		btnInsert.fire();
